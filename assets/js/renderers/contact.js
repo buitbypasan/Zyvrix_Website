@@ -32,14 +32,18 @@ export function renderContactPage(data) {
 
   const notice = byId("contactModeNotice");
   if (notice) {
+    // Basic mode should not surface an additional notice—showing the message
+    // suggested switching to e-commerce, which was confusing for customers
+    // intentionally browsing the brochure experience. We now keep the element
+    // hidden in basic mode, and still reset it when the commerce flow is
+    // active.
     if (!ecommerceEnabled) {
-      notice.hidden = false;
-      notice.textContent =
-        pageConfig.basicNotice ||
-        "Detailed package selection is available in the e-commerce experience. Share a quick note below and we'll follow up personally.";
-    } else {
       notice.hidden = true;
       notice.textContent = "";
+    } else {
+      const noticeCopy = pageConfig.notice || "";
+      notice.hidden = !noticeCopy;
+      notice.textContent = noticeCopy;
     }
   }
 
