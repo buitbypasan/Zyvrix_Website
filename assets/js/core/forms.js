@@ -8,7 +8,8 @@ import {
 export function bindContact(formId, statusId, configKey = "contact") {
   const form = byId(formId);
   const status = byId(statusId);
-  const config = window.DATA?.forms?.[configKey] || {};
+  const resolvedKey = form?.dataset?.formKey || configKey;
+  const config = window.DATA?.forms?.[resolvedKey] || window.DATA?.forms?.[configKey] || {};
   if (!form) return;
 
   form.addEventListener("submit", async (event) => {

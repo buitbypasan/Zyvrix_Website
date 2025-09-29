@@ -172,17 +172,37 @@ export function renderHomePage(data) {
   renderTeamSpotlight(page.spotlight, data.team, data.socials);
   renderFaqs(byId("faqsContainer"), data.faqs);
 
+  const contactConfig = page.contact || {};
   const contactHeading = byId("homeContactHeading");
-  if (contactHeading) contactHeading.textContent = page.contact?.heading || "";
+  if (contactHeading) {
+    contactHeading.textContent = ecommerceEnabled
+      ? contactConfig.heading || ""
+      : contactConfig.basicHeading || contactConfig.heading || "";
+  }
   const contactPoints = byId("homeContactPoints");
   if (contactPoints) {
     contactPoints.innerHTML = "";
-    (page.contact?.points || []).forEach((point) => {
+    const points = ecommerceEnabled
+      ? contactConfig.points || []
+      : contactConfig.basicPoints || contactConfig.points || [];
+    points.forEach((point) => {
       const li = document.createElement("li");
       li.textContent = point;
       contactPoints.appendChild(li);
     });
   }
   const contactCopy = byId("contactCopy");
-  if (contactCopy) contactCopy.textContent = data.contact?.copy || "";
+  if (contactCopy) {
+    contactCopy.textContent = ecommerceEnabled
+      ? data.contact?.copy || ""
+      : data.contact?.basicCopy || data.contact?.copy || "";
+  }
+  const homeForm = document.getElementById("contactForm");
+  if (homeForm) {
+    homeForm.dataset.formKey = ecommerceEnabled ? "contact" : "basicContact";
+    const hiddenField = homeForm.querySelector("input[name='form']");
+    if (hiddenField) {
+      hiddenField.value = ecommerceEnabled ? "Home contact" : "Home contact (basic site)";
+    }
+  }
 }

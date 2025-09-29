@@ -20,6 +20,7 @@ const ROLE_LABELS = {
   basic: "Basic customer",
 };
 const DEFAULT_ROLE = "basic";
+const FORM_REQUIRED_DATA_ATTR = "authStoredRequired";
 
 function normalizeRole(role) {
   const value = String(role || "").toLowerCase().trim();
@@ -455,6 +456,10 @@ function renderMobileAuth(customer) {
   const actions = ensureMobileActionsContainer();
   if (!actions) return;
   actions.querySelectorAll("[data-auth-nav]").forEach((item) => item.remove());
+  const ecommerceEnabled = isEcommerceEnabled();
+  if (!customer && !ecommerceEnabled) {
+    return;
+  }
   const wrapper = document.createElement("div");
   wrapper.setAttribute("data-auth-nav", "");
   wrapper.className = "mobile-auth";
@@ -473,7 +478,7 @@ function renderMobileAuth(customer) {
     logout.setAttribute("data-auth-action", "logout");
     logout.textContent = "Log out";
     wrapper.append(greeting, logout);
-  } else {
+  } else if (ecommerceEnabled) {
     const login = document.createElement("a");
     login.className = "btn btn-ghost";
     login.href = "login.html";
@@ -591,11 +596,94 @@ function showAuthStatus(message) {
   }, 2400);
 }
 
+function showAuthModeNotice(message) {
+  const notice = byId("authModeNotice");
+  if (!notice) return;
+  if (message) {
+    notice.hidden = false;
+    notice.textContent = message;
+  } else {
+    notice.hidden = true;
+    notice.textContent = "";
+  }
+}
+
+function getAuthUnavailableMessage(context = "login") {
+  return context === "signup"
+    ? "Account creation is available when the e-commerce experience is enabled."
+    : "Customer logins are available when the e-commerce experience is enabled.";
+}
+
+function toggleFormAvailability(form, status, available, message) {
+  if (!form) return;
+  const controls = form.querySelectorAll("input, button, select, textarea");
+  controls.forEach((control) => {
+    if (control.type === "hidden") return;
+    if (!available) {
+      if (control.required) {
+        control.dataset[FORM_REQUIRED_DATA_ATTR] = "true";
+      }
+      control.required = false;
+      control.disabled = true;
+      control.setAttribute("aria-disabled", "true");
+    } else {
+      control.disabled = false;
+      if (control.dataset[FORM_REQUIRED_DATA_ATTR] === "true") {
+        control.required = true;
+      }
+      control.removeAttribute("aria-disabled");
+    }
+  });
+  form.toggleAttribute("aria-disabled", !available);
+  if (status) {
+    status.textContent = available ? "" : message;
+  }
+}
+
+function updateAuthFormsAvailability() {
+  const available = isEcommerceEnabled();
+  const loginForm = byId("loginForm");
+  const signupForm = byId("signupForm");
+  const loginStatus = byId("loginStatus");
+  const signupStatus = byId("signupStatus");
+  const loginMessage = getAuthUnavailableMessage("login");
+  const signupMessage = getAuthUnavailableMessage("signup");
+
+  if (loginForm) {
+    toggleFormAvailability(loginForm, loginStatus, available, loginMessage);
+  }
+  if (signupForm) {
+    toggleFormAvailability(signupForm, signupStatus, available, signupMessage);
+  }
+
+  document
+    .querySelectorAll(".auth-provider")
+    .forEach((provider) => provider.toggleAttribute("hidden", !available));
+
+  if (available && !googleAuthInitialized) {
+    initGoogleAuth();
+  }
+
+  let noticeMessage = null;
+  if (!available) {
+    noticeMessage = signupForm ? signupMessage : loginMessage;
+  }
+  showAuthModeNotice(noticeMessage);
+}
+
 function renderAuthControls() {
   const { authSlot } = ensureSlots();
   if (!authSlot) return;
   const customer = getCurrentCustomer();
   authSlot.innerHTML = "";
+  const ecommerceEnabled = isEcommerceEnabled();
+  if (!customer && !ecommerceEnabled) {
+    authSlot.setAttribute("hidden", "hidden");
+    renderAdminControls(customer);
+    renderMobileAuth(customer);
+    return;
+  }
+  authSlot.removeAttribute("hidden");
   if (customer) {
     const firstName = (customer.name || "Customer").split(" ")[0];
     const info = document.createElement("div");
@@ -614,6 +702,12 @@ function renderAuthControls() {
     logout.textContent = "Log out";
     authSlot.appendChild(logout);
   } else {
+    if (!ecommerceEnabled) {
+      authSlot.setAttribute("hidden", "hidden");
+      renderAdminControls(customer);
+      renderMobileAuth(customer);
+      return;
+    }
     const login = document.createElement("a");
     login.className = "btn btn-ghost";
     login.href = "login.html";
@@ -651,6 +745,12 @@ function handleSignup() {
   const status = byId("signupStatus");
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (!isEcommerceEnabled()) {
+      const message = getAuthUnavailableMessage("signup");
+      if (status) status.textContent = message;
+      showAuthModeNotice(message);
+      return;
+    }
     if (typeof form.reportValidity === "function" && !form.reportValidity()) {
       return;
     }
@@ -706,6 +806,12 @@ function handleLogin() {
   const status = byId("loginStatus");
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (!isEcommerceEnabled()) {
+      const message = getAuthUnavailableMessage("login");
+      if (status) status.textContent = message;
+      showAuthModeNotice(message);
+      return;
+    }
     if (typeof form.reportValidity === "function" && !form.reportValidity()) {
       return;
     }
@@ -796,6 +902,9 @@ async function handleGoogleCredential(response, context = "login") {
 }
 
 function initGoogleAuth() {
+  if (!isEcommerceEnabled()) {
+    return;
+  }
   const slots = [
     { container: byId("googleLogin"), status: byId("googleLoginStatus"), context: "login" },
     { container: byId("googleSignup"), status: byId("googleSignupStatus"), context: "signup" },
@@ -937,13 +1046,20 @@ export function initAuth() {
   handleSignup();
   handleLogin();
   handleLogoutClicks();
+  updateAuthFormsAvailability();
   initGoogleAuth();
   if (envReadyState.ready) {
     handleSecureEnvReady({ detail: envReadyState.detail });
   }
-  document.addEventListener(AUTH_CHANGE_EVENT, renderAuthControls);
+  document.addEventListener(AUTH_CHANGE_EVENT, () => {
+    renderAuthControls();
+    updateAuthFormsAvailability();
+  });
   document.addEventListener(AUTH_CHANGE_EVENT, renderDatabaseNotice);
   document.addEventListener("secure-env-ready", handleSecureEnvReady);
   document.addEventListener("click", handleModeToggle);
-  document.addEventListener(SITE_MODE_EVENT, () => renderAdminControls());
+  document.addEventListener(SITE_MODE_EVENT, () => {
+    renderAuthControls();
+    updateAuthFormsAvailability();
+  });
 }
