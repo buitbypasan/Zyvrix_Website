@@ -1,0 +1,35 @@
+name: Application Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  php-lint:
+    name: Lint PHP API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      - name: Validate Composer configuration
+        working-directory: public_html/api
+        run: composer validate
+
+      - name: Install Composer dependencies
+        working-directory: public_html/api
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Lint PHP source files
+        run: |
+          find public_html/api -path "public_html/api/vendor" -prune -o -name '*.php' -print0 \
+            | xargs -0 -n 1 php -l
