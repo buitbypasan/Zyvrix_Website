@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zyvrix</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="canonical" href="#" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="" />
+    <link rel="icon" href="assets/img/favicon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="assets/js/env.js"></script>
+    <script type="module" src="assets/js/data/index.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script id="orgJsonLd" type="application/ld+json"></script>
+  </head>
+
+  <body data-page="home">
+    <div id="pageLoader" class="page-loader" aria-hidden="true">
+      <div class="page-loader__spinner"></div>
+      <p>Loading Zyvrix…</p>
+    </div>
+    <header class="site-header" role="banner">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Go to home">
+          <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" fill="currentColor" />
+          </svg>
+          <span data-bind="brandName"></span>
+        </a>
+        <button
+          id="mobileNavToggle"
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <nav
+          id="primaryNav"
+          class="primary-nav"
+          role="navigation"
+          aria-label="Primary"
+        ></nav>
+        <nav
+          id="mobileNav"
+          class="mobile-nav"
+          role="navigation"
+          aria-label="Mobile"
+          hidden
+        ></nav>
+        <button
+          id="themeToggle"
+          class="btn btn-ghost"
+          aria-pressed="false"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero container">
+        <div class="hero-text">
+          <p class="eyebrow" id="heroEyebrow"></p>
+          <h1 id="heroTitle"></h1>
+          <p id="heroSubtitle"></p>
+          <div class="cta-row">
+            <a class="btn" id="heroPrimary" href="#"></a>
+            <a class="btn btn-ghost" id="heroSecondary" href="#"></a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="blob"></div>
+          <div class="hero-metrics" id="heroMetrics" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="container services js-reveal">
+        <h2 id="servicesHeading"></h2>
+        <div class="services-grid" id="servicesCards"></div>
+      </section>
+
+      <section class="container add-ons js-reveal">
+        <div class="section-header">
+          <p class="eyebrow" id="addOnsEyebrow"></p>
+          <h2 id="addOnsHeading"></h2>
+          <p id="addOnsCopy"></p>
+        </div>
+        <div class="grid-3" id="addOnsCards"></div>
+      </section>
+
+      <section class="container portfolio js-reveal">
+        <h2 id="highlightsHeading"></h2>
+        <div class="outcome-grid" id="highlightsGrid"></div>
+      </section>
+
+      <section class="container media-gallery js-reveal">
+        <div class="section-header">
+          <h2 id="galleryHeading"></h2>
+          <p id="galleryCopy"></p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </section>
+
+      <section class="container testimonials js-reveal">
+        <h2 id="testimonialsHeading"></h2>
+        <div class="quotes" id="testimonialsList"></div>
+      </section>
+
+      <section class="container team-spotlight">
+        <div class="team-intro js-reveal">
+          <h2 id="teamSpotlightHeading"></h2>
+          <p id="teamSpotlightCopy"></p>
+        </div>
+        <div id="teamSpotlightGrid" class="team-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="container faqs js-reveal">
+        <h2>FAQs</h2>
+        <div id="faqsContainer"></div>
+      </section>
+
+      <section id="contact" class="container contact">
+        <h2 id="homeContactHeading"></h2>
+        <p id="contactCopy"></p>
+        <ul id="homeContactPoints"></ul>
+        <form id="contactForm" class="form" novalidate data-form-key="contact">
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" required />
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="msg">Message</label>
+            <textarea id="msg" name="message" rows="4" required></textarea>
+          </div>
+          <input type="hidden" name="form" value="Home contact" />
+          <button class="btn" type="submit">Send</button>
+          <p id="contactStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div class="container footer-top__content">
+          <p class="footer-top__lead">
+            Get connected with us on social networks
+          </p>
+          <ul class="footer-social social" id="footerSocial"></ul>
+        </div>
+      </div>
+      <div class="footer-main container">
+        <div class="footer-column footer-column--about">
+          <h4>About</h4>
+          <p id="footerAbout"></p>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul id="footerContact" class="footer-contact"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Security</h4>
+          <ul id="footerSecurity" class="footer-security"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <nav id="footerPolicies" class="foot-links" aria-label="Legal"></nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom__content">
+          <span id="footerLegal"></span>
+          <a href="#" id="openCookie" class="link" data-no-loader="true"
+            >Cookie preferences</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="cookieBanner"
+      class="cookie-banner"
+      role="dialog"
+      aria-live="polite"
+      aria-label="Cookie notice"
+    >
+      <p>
+        We use cookies to improve your experience and for analytics.
+        <a href="#" class="link">Learn more</a>.
+      </p>
+      <div class="cookie-actions">
+        <button class="btn btn-ghost" data-cookie="reject">Reject</button>
+        <button class="btn" data-cookie="accept">Accept</button>
+      </div>
+    </div>
+  </body>
+</html>

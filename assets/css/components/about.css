@@ -1,0 +1,324 @@
+.about-page {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.about-header {
+  text-align: center;
+}
+.about-story .grid-2,
+.about-community .grid-2 {
+  align-items: stretch;
+}
+.milestones {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.milestones li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+.milestones strong {
+  background: color-mix(in srgb, var(--brand) 12%, var(--card));
+  color: var(--brand);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+.about-figure {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+.about-figure img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+.about-figure figcaption {
+  padding: 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.about-pillars {
+  margin: 48px 0;
+}
+
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.pillar-card {
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 12px;
+}
+
+.pillar-card h3 {
+  margin: 0;
+}
+
+.pillar-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.impact-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.impact-card strong {
+  display: block;
+  font-size: 2rem;
+}
+.impact-card span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.impact-card p {
+  margin: 0;
+  color: var(--muted);
+}
+.about-assurance ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.about-assurance li {
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.about-assurance li::before {
+  content: "✔";
+  color: var(--brand);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.about-community ul,
+.about-gallery ul,
+.about-mission ul,
+.add-on-body ul {
+  list-style: disc inside;
+}
+.about-community ul li,
+#aboutPartners li {
+  margin-bottom: 8px;
+}
+.quote-card:hover,
+.quote-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
+}
+.faqs details {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.team-spotlight {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.team-intro p {
+  color: var(--muted);
+  max-width: 560px;
+}
+.spotlight-card {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), transparent 80%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  height: 100%;
+}
+.spotlight-card header .eyebrow {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.spotlight-card h3 {
+  margin: 4px 0;
+  font-size: 28px;
+}
+.spotlight-card .location {
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.spotlight-card .bio {
+  margin-bottom: 16px;
+  color: var(--muted);
+}
+.spotlight-card .focus {
+  padding-left: 20px;
+  margin: 12px 0 24px;
+}
+.spotlight-card:hover,
+.spotlight-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
+}
+.founder-quote {
+  font-size: 20px;
+  margin: 0 0 16px;
+}
+.quote-generator {
+  display: flex;
+  justify-content: center;
+}
+.spotlight-card .spotlight-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.spotlight-links {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.spotlight-links a {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.spotlight-card .spotlight-socials {
+  margin-top: 18px;
+}
+
+.spotlight-card .spotlight-socials .social {
+  display: flex;
+  gap: 10px;
+}
+
+.spotlight-card .spotlight-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 30%, var(--border));
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.spotlight-card .spotlight-socials a:hover,
+.spotlight-card .spotlight-socials a:focus-visible {
+  outline: none;
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--brand) 18%, transparent);
+}
+
+.spotlight-card .spotlight-socials .icon {
+  font-size: 0.9rem;
+}
+
+.spotlight-card .spotlight-socials .icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.quote-card-panel {
+  position: relative;
+  background: color-mix(in srgb, var(--card) 92%, var(--bg) 8%);
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  max-width: 860px;
+  width: 100%;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+}
+
+.quote-card-panel::before {
+  content: "";
+  position: absolute;
+  inset: -20% -30% auto auto;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(
+    circle at top right,
+    color-mix(in srgb, var(--brand) 28%, transparent) 0%,
+    transparent 70%
+  );
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.quote-card-panel > * {
+  position: relative;
+  z-index: 1;
+}
+.quote-card-panel .quote-card__header p {
+  color: var(--muted);
+  max-width: 580px;
+}
+.quote-card-panel .quote-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 16px;
+}
+.quote-card-panel .quote-form label,
+.quote-card-panel .quote-form fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text);
+}
+.quote-card-panel .quote-form select,
+.quote-card-panel .quote-form input[type="radio"] {
+  accent-color: var(--brand);

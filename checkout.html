@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zyvrix</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="canonical" href="#" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="" />
+    <link rel="icon" href="assets/img/favicon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="assets/js/env.js"></script>
+    <script type="module" src="assets/js/data/index.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script id="orgJsonLd" type="application/ld+json"></script>
+  </head>
+
+  <body data-page="checkout">
+    <div id="pageLoader" class="page-loader" aria-hidden="true">
+      <div class="page-loader__spinner"></div>
+      <p>Loading Zyvrix…</p>
+    </div>
+    <header class="site-header" role="banner">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Go to home">
+          <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" fill="currentColor" />
+          </svg>
+          <span data-bind="brandName"></span>
+        </a>
+        <button
+          id="mobileNavToggle"
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <nav
+          id="primaryNav"
+          class="primary-nav"
+          role="navigation"
+          aria-label="Primary"
+        ></nav>
+        <nav
+          id="mobileNav"
+          class="mobile-nav"
+          role="navigation"
+          aria-label="Mobile"
+          hidden
+        ></nav>
+        <button
+          id="themeToggle"
+          class="btn btn-ghost"
+          aria-pressed="false"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+    </header>
+
+    <main class="container checkout-page">
+      <h1>Checkout</h1>
+      <p id="messageInfo"></p>
+      <p id="checkoutAccount" class="muted" aria-live="polite"></p>
+      <div
+        id="orderSummary"
+        class="order-summary"
+        role="region"
+        aria-live="polite"
+      ></div>
+      <section class="related-services" aria-label="Suggested services">
+        <h2>Recommended services</h2>
+        <div id="relatedServices" class="service-grid"></div>
+      </section>
+      <div class="actions">
+        <a class="btn" href="payment.html">Continue to payment</a>
+        <a class="btn btn-ghost" href="pricing.html">Change plan</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div class="container footer-top__content">
+          <p class="footer-top__lead">
+            Get connected with us on social networks
+          </p>
+          <ul class="footer-social social" id="footerSocial"></ul>
+        </div>
+      </div>
+      <div class="footer-main container">
+        <div class="footer-column footer-column--about">
+          <h4>About</h4>
+          <p id="footerAbout"></p>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul id="footerContact" class="footer-contact"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Security</h4>
+          <ul id="footerSecurity" class="footer-security"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <nav id="footerPolicies" class="foot-links" aria-label="Legal"></nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom__content">
+          <span id="footerLegal"></span>
+          <a href="#" id="openCookie" class="link" data-no-loader="true"
+            >Cookie preferences</a
+          >
+        </div>
+      </div>
+    </footer>
+    <div
+      id="cookieBanner"
+      class="cookie-banner"
+      role="dialog"
+      aria-live="polite"
+      aria-label="Cookie notice"
+    >
+      <p>
+        We use cookies to improve your experience and for analytics.
+        <a href="#" class="link">Learn more</a>.
+      </p>
+      <div class="cookie-actions">
+        <button class="btn btn-ghost" data-cookie="reject">Reject</button>
+        <button class="btn" data-cookie="accept">Accept</button>
+      </div>
+    </div>
+  </body>
+</html>

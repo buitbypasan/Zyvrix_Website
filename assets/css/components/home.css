@@ -1,0 +1,337 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 40px;
+  align-items: center;
+  min-height: 60vh;
+}
+.hero-art {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
+}
+.hero-text h1 {
+  font-size: 42px;
+  margin: 0 0 8px;
+}
+.hero-text p {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+.blob {
+  width: 100%;
+  height: 260px;
+  border-radius: 20px;
+  background: radial-gradient(circle at 30% 20%, var(--brand), transparent 40%),
+    radial-gradient(circle at 70% 60%, var(--brand-2), transparent 40%);
+  filter: blur(6px);
+  animation: float 9s ease-in-out infinite alternate;
+}
+
+.hero-metrics {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.hero-metrics div {
+  background: color-mix(in srgb, var(--card) 80%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.hero-metrics strong {
+  display: block;
+  font-size: 1.4rem;
+}
+
+.hero-metrics span {
+  color: var(--muted);
+}
+.services-grid,
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.service-card {
+  background: linear-gradient(180deg, var(--card), color-mix(in srgb, var(--card) 70%, transparent));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.18), transparent 55%);
+}
+
+.service-card__icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.service-card__body h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.service-card__body p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.service-card__body ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+.section-header {
+  max-width: 760px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+.section-header .eyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  color: var(--brand);
+  margin-bottom: 8px;
+}
+.add-ons .grid-3,
+.media-gallery .gallery-grid {
+  align-items: stretch;
+}
+.add-on-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  height: 100%;
+}
+.add-on-figure {
+  margin: -4px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.add-on-body .price {
+  font-weight: 600;
+  color: var(--brand);
+}
+.add-on-body ul {
+  padding-left: 18px;
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+.gallery-grid,
+.outcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.gallery-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.gallery-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.gallery-card figcaption {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.outcome-card {
+  display: grid;
+  grid-template-rows: 160px auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+
+.outcome-card figure {
+  margin: 0;
+  overflow: hidden;
+}
+
+.outcome-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.outcome-card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.outcome-card__body h3 {
+  margin: 0;
+}
+
+.outcome-card__body p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.metric {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  color: var(--brand);
+  margin-right: 8px;
+}
+
+.metric strong {
+  font-size: 1.1rem;
+}
+
+.metric small {
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--brand) 70%, #fff 30%);
+}
+.gallery-card figcaption strong {
+  font-size: 1rem;
+}
+.gallery-card figcaption span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.quote-status {
+  margin-top: 16px;
+  color: var(--muted);
+}
+.card {
+  background: var(--card);
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.card:hover,
+.card:focus-within {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
+}
+.grid-3 {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.progress {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+.progress li {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+.progress li.current {
+  background: var(--card);
+}
+.progress li.done {
+  opacity: 0.6;
+}
+.shot {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.shot:hover,
+.shot:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+}
+.quotes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.quote-card {
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 24px;
+  font-size: 18px;
+  box-shadow: var(--shadow);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.quote-card cite {
+  display: block;
+  margin-top: 16px;
+  font-style: normal;
+  color: var(--muted);
+}
+
+.contact ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.contact ul li {
+  position: relative;
+  padding-left: 28px;
+  color: color-mix(in srgb, var(--text) 82%, var(--muted) 18%);
+  line-height: 1.6;
+}
+
+.contact ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 18%, transparent);
+}

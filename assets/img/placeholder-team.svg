@@ -1,0 +1,9 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" rx="24" fill="#1e293b"/>
+  <rect x="32" y="32" width="536" height="336" rx="20" fill="#0f172a"/>
+  <path d="M120 280c0-44 36-80 80-80s80 36 80 80" stroke="#38bdf8" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="200" cy="160" r="52" fill="#2563eb" opacity="0.85"/>
+  <path d="M340 222c18-30 52-50 90-50 60 0 108 48 108 108" stroke="#a855f7" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="432" cy="132" r="42" fill="#7c3aed" opacity="0.72"/>
+  <text x="300" y="360" text-anchor="middle" fill="#cbd5f5" font-family="'Inter',sans-serif" font-size="26" font-weight="600">Team collaboration snapshot</text>
+</svg>

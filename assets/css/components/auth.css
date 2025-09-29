@@ -1,0 +1,162 @@
+@media (max-width: 768px) {
+  .compare-matrix {
+    min-width: 0;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom__content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-top__content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .custom-engagement {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Auth pages */
+.auth-page {
+  min-height: calc(100vh - 240px);
+  display: grid;
+  align-items: start;
+  justify-content: center;
+  padding: 48px 24px 72px;
+}
+
+.auth-card {
+  max-width: 520px;
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 20px;
+}
+
+.auth-card h1 {
+  margin: 0;
+}
+
+.auth-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.field-hint {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.form-status {
+  margin: 0;
+  min-height: 20px;
+}
+
+.auth-switch {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.auth-switch a {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.auth-db {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.callout {
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  color: var(--text);
+}
+
+.callout--info {
+  border-color: color-mix(in srgb, var(--brand) 40%, var(--border));
+  background: color-mix(in srgb, var(--brand) 12%, var(--card));
+}
+
+.callout--warning {
+  border-color: color-mix(in srgb, #f97316 55%, var(--border));
+  background: color-mix(in srgb, #f97316 12%, var(--card));
+}
+
+.callout--error {
+  border-color: color-mix(in srgb, #ef4444 65%, var(--border));
+  background: color-mix(in srgb, #ef4444 10%, var(--card));
+}
+
+.auth-provider {
+  display: grid;
+  gap: 12px;
+}
+
+.oauth-button-slot {
+  display: flex;
+  justify-content: center;
+}
+
+.oauth-status {
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-height: 20px;
+}
+
+.oauth-divider {
+  position: relative;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+

@@ -1,0 +1,32 @@
+name: Manual Deploy to Main Host
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_directory:
+        description: "Remote path to deploy the site"
+        required: true
+        default: "/var/www/html"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync project files to host server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.MAIN_HOST }}
+          username: ${{ secrets.MAIN_HOST_USER }}
+          key: ${{ secrets.MAIN_HOST_SSH_KEY }}
+          port: ${{ secrets.MAIN_HOST_PORT }}
+          source: "."
+          target: ${{ github.event.inputs.target_directory }}
+          strip_components: 0
+          overwrite: true
+          rm: true
+          include_hidden: true
+          debug: true

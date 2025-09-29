@@ -1,0 +1,250 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+}
+
+.nav-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-actions__slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-actions__slot--admin {
+  gap: 10px;
+}
+
+.nav-user {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.nav-user__wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-user__role {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  background: color-mix(in srgb, var(--brand) 18%, var(--bg));
+  color: var(--brand);
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, var(--border));
+}
+
+.nav-mode {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.cart-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.cart-toggle__icon {
+  font-size: 1rem;
+}
+
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0 6px;
+}
+
+.mobile-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-auth__greeting {
+  margin: 0;
+  color: var(--text);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  margin: 3px 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+body.nav-open .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+
+body.nav-open .nav-toggle__bar:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+body.nav-open .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+.mobile-nav {
+  position: fixed;
+  inset: 72px 16px 16px;
+  background: color-mix(in srgb, var(--bg) 90%, rgba(15, 23, 42, 0.7));
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow);
+  z-index: 15;
+  overflow-y: auto;
+}
+
+.mobile-nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.mobile-nav a:hover {
+  color: var(--brand);
+}
+
+.mobile-nav.is-open {
+  display: flex;
+}
+
+.mobile-nav__links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-nav__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+}
+
+.mobile-nav__actions .btn,
+.mobile-nav__actions .cart-toggle {
+  width: 100%;
+}
+
+.mobile-nav__actions .cart-toggle {
+  justify-content: space-between;
+}
+
+.mobile-nav__actions .mobile-auth {
+  padding-top: 4px;
+}
+
+.mobile-nav__actions .nav-user {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mobile-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-admin__label {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.primary-nav a {
+  margin: 0 8px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.primary-nav a:hover {
+  color: var(--brand);
+}
+
+@media (max-width: 768px) {
+  .primary-nav {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .nav-actions {
+    display: none;
+  }
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zyvrix — Create an account</title>
+    <meta
+      name="description"
+      content="Create a Zyvrix customer account."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="assets/js/env.js"></script>
+    <script type="module" src="assets/js/data/index.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script id="orgJsonLd" type="application/ld+json"></script>
+  </head>
+
+  <body data-page="signup">
+    <div id="pageLoader" class="page-loader" aria-hidden="true">
+      <div class="page-loader__spinner"></div>
+      <p>Loading Zyvrix…</p>
+    </div>
+    <header class="site-header" role="banner">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Go to home">
+          <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" fill="currentColor" />
+          </svg>
+          <span data-bind="brandName"></span>
+        </a>
+        <button
+          id="mobileNavToggle"
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <nav
+          id="primaryNav"
+          class="primary-nav"
+          role="navigation"
+          aria-label="Primary"
+        ></nav>
+        <nav
+          id="mobileNav"
+          class="mobile-nav"
+          role="navigation"
+          aria-label="Mobile"
+          hidden
+        ></nav>
+        <button
+          id="themeToggle"
+          class="btn btn-ghost"
+          aria-pressed="false"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+    </header>
+
+    <main class="container auth-page" role="main">
+      <section class="auth-card" aria-labelledby="signupHeading">
+        <h1 id="signupHeading">Create your account</h1>
+        <p>
+          Set up a secure customer login so you can build a cart, manage orders,
+          and confirm projects with confidence. Passwords are hashed locally
+          before being stored.
+        </p>
+        <div class="auth-provider" aria-label="Social sign-up options">
+          <div id="googleSignup" class="oauth-button-slot"></div>
+          <p
+            id="googleSignupStatus"
+            class="oauth-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <div class="oauth-divider"><span>or create an email login</span></div>
+        </div>
+        <form id="signupForm" class="form auth-form" novalidate>
+          <div class="form-row">
+            <label for="signupName">Full name</label>
+            <input
+              id="signupName"
+              name="fullname"
+              autocomplete="name"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="signupEmail">Email</label>
+            <input
+              id="signupEmail"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="signupPassword">Password</label>
+            <input
+              id="signupPassword"
+              name="password"
+              type="password"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="signupConfirm">Confirm password</label>
+            <input
+              id="signupConfirm"
+              name="confirm"
+              type="password"
+              minlength="8"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+          <div class="form-row">
+            <label for="signupRole">Customer type</label>
+            <select id="signupRole" name="role" required>
+              <option value="basic" selected>Basic customer</option>
+              <option value="loyalty">Loyalty customer</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="signupAccess">Access code (optional)</label>
+            <input
+              id="signupAccess"
+              name="accessCode"
+              type="text"
+              autocomplete="one-time-code"
+            />
+            <p class="field-hint muted">
+              Team members can enter their staff or admin access code to unlock the right permissions.
+            </p>
+          </div>
+          <button class="btn" type="submit">Create account</button>
+          <p
+            id="signupStatus"
+            class="form-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+        <p class="auth-switch">
+          Already registered? <a href="login.html">Log in to continue.</a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div class="container footer-top__content">
+          <p class="footer-top__lead">
+            Get connected with us on social networks
+          </p>
+          <ul class="footer-social social" id="footerSocial"></ul>
+        </div>
+      </div>
+      <div class="footer-main container">
+        <div class="footer-column footer-column--about">
+          <h4>About</h4>
+          <p id="footerAbout"></p>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul id="footerContact" class="footer-contact"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Security</h4>
+          <ul id="footerSecurity" class="footer-security"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <nav id="footerPolicies" class="foot-links" aria-label="Legal"></nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom__content">
+          <span id="footerLegal"></span>
+          <a href="#" id="openCookie" class="link" data-no-loader="true"
+            >Cookie preferences</a
+          >
+        </div>
+      </div>
+    </footer>
+    <div
+      id="cookieBanner"
+      class="cookie-banner"
+      role="dialog"
+      aria-live="polite"
+      aria-label="Cookie notice"
+    >
+      <p>
+        We use cookies to improve your experience and for analytics.
+        <a href="#" class="link">Learn more</a>.
+      </p>
+      <div class="cookie-actions">
+        <button class="btn btn-ghost" data-cookie="reject">Reject</button>
+        <button class="btn" data-cookie="accept">Accept</button>
+      </div>
+    </div>
+  </body>
+</html>

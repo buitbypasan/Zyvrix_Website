@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Pricing — Service bundles tailored by Zyvrix
+    </title>
+    <meta
+      name="description"
+      content="Review Zyvrix pricing for web, mobile, API, and ongoing protection services delivered by our founder-led team."
+    />
+    <meta
+      name="keywords"
+      content="secure development pricing, ecommerce build cost, web maintenance retainer, seo optimisation retainers"
+    />
+    <link rel="canonical" href="https://secureitdevelopers.com/pricing" />
+    <meta
+      property="og:title"
+      content="Pricing — Service bundles tailored by Zyvrix"
+    />
+    <meta
+      property="og:description"
+      content="Review Zyvrix pricing for web, mobile, API, and ongoing protection services delivered by our founder-led team."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://secureitdevelopers.com/pricing" />
+    <meta property="og:image" content="assets/img/placeholder-ops.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Pricing — Service bundles tailored by Zyvrix"
+    />
+    <meta
+      name="twitter:description"
+      content="Review Zyvrix pricing for web, mobile, API, and ongoing protection services delivered by our founder-led team."
+    />
+    <meta name="twitter:image" content="assets/img/placeholder-ops.svg" />
+    <link rel="icon" href="assets/img/favicon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="assets/js/env.js"></script>
+    <script type="module" src="assets/js/data/index.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script id="orgJsonLd" type="application/ld+json"></script>
+  </head>
+
+  <body data-page="pricing">
+    <div id="pageLoader" class="page-loader" aria-hidden="true">
+      <div class="page-loader__spinner"></div>
+      <p>Loading Zyvrix…</p>
+    </div>
+    <header class="site-header" role="banner">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Go to home">
+          <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" fill="currentColor" />
+          </svg>
+          <span data-bind="brandName"></span>
+        </a>
+        <button
+          id="mobileNavToggle"
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <nav
+          id="primaryNav"
+          class="primary-nav"
+          role="navigation"
+          aria-label="Primary"
+        ></nav>
+        <nav
+          id="mobileNav"
+          class="mobile-nav"
+          role="navigation"
+          aria-label="Mobile"
+          hidden
+        ></nav>
+        <button
+          id="themeToggle"
+          class="btn btn-ghost"
+          aria-pressed="false"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="container">
+        <h1>Pricing</h1>
+        <p id="pricingIntro"></p>
+      </section>
+      <section class="container quote-generator js-reveal">
+        <div class="quote-card-panel">
+          <div class="quote-card__header">
+            <h2>Need a quick quote?</h2>
+            <p>
+              Answer a few questions and we’ll suggest a plan with an estimated
+              investment.
+            </p>
+          </div>
+          <form
+            id="quoteForm"
+            class="quote-form"
+            novalidate
+            data-form-key="quote"
+          >
+            <div class="grid-2">
+              <label>
+                Project focus
+                <select id="quoteProject" name="project" required>
+                  <option value="" disabled selected>Select one</option>
+                  <option value="web">Web or marketing site</option>
+                  <option value="mobile">Mobile application</option>
+                  <option value="api">API or backend platform</option>
+                  <option value="ecom">Commerce experience</option>
+                </select>
+              </label>
+              <label>
+                Expected launch timeline
+                <select id="quoteTimeline" name="timeline" required>
+                  <option value="" disabled selected>Select a timeline</option>
+                  <option value="standard">6–10 weeks</option>
+                  <option value="accelerated">3–5 weeks</option>
+                  <option value="rush">Under 3 weeks</option>
+                </select>
+              </label>
+            </div>
+            <fieldset class="quote-radio">
+              <legend>Build complexity</legend>
+              <label>
+                <input type="radio" name="projectSize" value="small" required />
+                Launch essentials
+              </label>
+              <label>
+                <input type="radio" name="projectSize" value="medium" />
+                Growth-ready
+              </label>
+              <label>
+                <input type="radio" name="projectSize" value="large" />
+                Enterprise scale
+              </label>
+            </fieldset>
+            <div class="grid-2">
+              <label>
+                Compliance requirements
+                <select id="quoteCompliance" name="compliance" required>
+                  <option value="" disabled selected>Select an option</option>
+                  <option value="standard">General best practice</option>
+                  <option value="regulated">
+                    Regulated industry (finance, health)
+                  </option>
+                  <option value="critical">Mission critical / audited</option>
+                </select>
+              </label>
+              <label>
+                Ongoing optimisation support
+                <select id="quoteSupport" name="support" required>
+                  <option value="" disabled selected>
+                    Select a support level
+                  </option>
+                  <option value="0">None right now</option>
+                  <option value="0.12">Monthly performance & CRO</option>
+                  <option value="0.2">Embedded optimisation squad</option>
+                </select>
+              </label>
+            </div>
+            <div class="grid-2">
+              <label>
+                Contact email
+                <input
+                  id="quoteEmail"
+                  name="contactEmail"
+                  type="email"
+                  placeholder="name@company.com"
+                  required
+                />
+              </label>
+              <label>
+                Company or site URL
+                <input
+                  id="quoteCompany"
+                  name="company"
+                  type="text"
+                  placeholder="Acme Security"
+                />
+              </label>
+            </div>
+            <button type="submit" class="btn">Generate my quote</button>
+            <input type="hidden" name="form" value="Pricing quote" />
+          </form>
+          <div
+            id="quoteResult"
+            class="quote-result"
+            role="status"
+            aria-live="polite"
+          ></div>
+          <p
+            id="quoteStatus"
+            class="quote-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </div>
+      </section>
+      <section class="container add-ons js-reveal" id="pricingAddOns">
+        <div class="section-header">
+          <p class="eyebrow" id="pricingAddOnsEyebrow"></p>
+          <h2 id="pricingAddOnsHeading"></h2>
+          <p id="pricingAddOnsCopy"></p>
+        </div>
+        <div class="grid-3" id="pricingAddOnsCards"></div>
+      </section>
+      <section class="container compare js-reveal" id="pricingCompare">
+        <div class="section-header">
+          <h2 id="compareHeading"></h2>
+          <p id="compareCopy"></p>
+        </div>
+        <div class="compare-nav" id="compareNav" role="tablist"></div>
+        <div class="compare-table" id="compareTable" aria-live="polite"></div>
+      </section>
+      <div
+        class="subnav container"
+        role="navigation"
+        aria-label="Pricing categories"
+        id="pricingSubnav"
+      ></div>
+      <div class="container" id="pricingTabs"></div>
+      <section class="container package-deep-dive js-reveal">
+        <div class="section-header">
+          <p class="eyebrow" id="pricingDeepDiveEyebrow"></p>
+          <h2 id="pricingDeepDiveHeading"></h2>
+          <p id="pricingDeepDiveCopy"></p>
+        </div>
+        <div
+          class="tab-details"
+          id="pricingDeepDivePanels"
+          aria-live="polite"
+        ></div>
+      </section>
+      <section
+        class="container custom-engagement js-reveal"
+        id="customEngagement"
+      >
+        <div class="custom-engagement__content">
+          <p class="eyebrow" id="customEngagementEyebrow"></p>
+          <h2 id="customEngagementHeading"></h2>
+          <p id="customEngagementCopy"></p>
+          <ul id="customEngagementHighlights"></ul>
+          <div class="custom-engagement__actions">
+            <a class="btn" id="customEngagementPrimary" href="#"></a>
+            <a
+              class="btn btn-ghost"
+              id="customEngagementSecondary"
+              href="#"
+            ></a>
+          </div>
+        </div>
+        <aside
+          class="custom-engagement__aside"
+          id="customEngagementAside"
+        ></aside>
+      </section>
+      <section class="container standalone-services js-reveal">
+        <div class="section-header">
+          <p class="eyebrow" id="standaloneEyebrow"></p>
+          <h2 id="standaloneHeading"></h2>
+          <p id="standaloneCopy"></p>
+        </div>
+        <div class="service-grid" id="additionalServices"></div>
+        <p class="muted" id="standaloneNote"></p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div class="container footer-top__content">
+          <p class="footer-top__lead">
+            Get connected with us on social networks
+          </p>
+          <ul class="footer-social social" id="footerSocial"></ul>
+        </div>
+      </div>
+      <div class="footer-main container">
+        <div class="footer-column footer-column--about">
+          <h4>About</h4>
+          <p id="footerAbout"></p>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul id="footerContact" class="footer-contact"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Security</h4>
+          <ul id="footerSecurity" class="footer-security"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <nav id="footerPolicies" class="foot-links" aria-label="Legal"></nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom__content">
+          <span id="footerLegal"></span>
+          <a href="#" id="openCookie" class="link" data-no-loader="true"
+            >Cookie preferences</a
+          >
+        </div>
+      </div>
+    </footer>
+    <div
+      id="cookieBanner"
+      class="cookie-banner"
+      role="dialog"
+      aria-live="polite"
+      aria-label="Cookie notice"
+    >
+      <p>
+        We use cookies to improve your experience and for analytics.
+        <a href="#" class="link">Learn more</a>.
+      </p>
+      <div class="cookie-actions">
+        <button class="btn btn-ghost" data-cookie="reject">Reject</button>
+        <button class="btn" data-cookie="accept">Accept</button>
+      </div>
+    </div>
+  </body>
+</html>

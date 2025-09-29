@@ -1,0 +1,295 @@
+.quote-card-panel .quote-form select,
+.quote-card-panel .quote-form input[type="email"],
+.quote-card-panel .quote-form input[type="text"] {
+  background: color-mix(in srgb, var(--card) 92%, var(--bg) 8%);
+  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--text);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  min-height: 48px;
+  font: inherit;
+  box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.05);
+}
+
+.quote-card-panel .quote-form select:focus,
+.quote-card-panel .quote-form input[type="email"]:focus,
+.quote-card-panel .quote-form input[type="text"]:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 30%, transparent);
+  outline: none;
+}
+.quote-card-panel .quote-radio {
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.quote-card-panel .quote-form .grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.quote-card-panel .quote-form legend {
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--text) 88%, var(--muted) 12%);
+}
+
+.quote-card-panel .quote-radio label {
+  font-weight: 500;
+  gap: 6px;
+}
+.quote-card-panel .quote-result {
+  margin-top: 24px;
+}
+.quote-card-panel .quote-result.is-ready .quote-output {
+  animation: fadeUp 0.4s ease;
+}
+.quote-card-panel .quote-output {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), transparent 75%);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 12px;
+}
+.quote-card-panel .quote-output h3 {
+  margin: 0;
+  font-size: 32px;
+}
+.quote-card-panel .quote-features {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+.quote-card-panel .quote-meta ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+.form {
+  display: grid;
+  gap: 20px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--card) 85%, #fff 15%),
+    #fff
+  );
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+.form input,
+.form textarea,
+.form select {
+  background: color-mix(in srgb, var(--card) 92%, var(--bg) 8%);
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  font: inherit;
+  box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="dark"] .form input,
+[data-theme="dark"] .form textarea,
+[data-theme="dark"] .form select {
+  box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.4);
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 30%, transparent);
+  outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: color-mix(in srgb, var(--muted) 80%, var(--text) 20%);
+  opacity: 1;
+}
+
+.service-chip,
+.service-option {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 12px;
+}
+
+.service-chip__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-chip h4 {
+  margin: 0;
+}
+
+.service-chip p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.service-chip__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.service-chip__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 18%, var(--card) 82%);
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.service-chip__price {
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.service-chip .btn {
+  width: fit-content;
+}
+
+.service-chip__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.service-chip__actions .btn {
+  margin-top: 0;
+}
+
+.service-chip__cart {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text);
+}
+
+.service-chip__actions .detail-link {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.service-chip-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 4px 12px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  align-items: stretch;
+}
+
+.service-chip-list .service-chip {
+  flex: 0 0 min(320px, 80vw);
+  min-width: 260px;
+  scroll-snap-align: start;
+}
+
+.service-chip-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.service-chip-list::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--brand) 35%, transparent);
+  border-radius: 999px;
+}
+
+.service-chip__toggle {
+  cursor: pointer;
+}
+
+.service-chip__toggle[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand) 25%, transparent);
+}
+
+.service-option {
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.service-option input {
+  margin-top: 6px;
+}
+
+.service-option span {
+  display: grid;
+  gap: 6px;
+}
+.service-option input:focus-visible + span {
+  outline: 3px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+.service-option input:checked + span strong {
+  color: var(--brand);
+}
+
+.service-option strong {
+  font-size: 1rem;
+}
+
+.service-option em {
+  font-style: normal;
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.service-selector {
+  border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  border-radius: 16px;
+  padding: 20px;
+  background: color-mix(in srgb, var(--card) 65%, transparent);
+}
+
+.service-selector legend {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.service-selector__grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  overflow-x: auto;
+  padding: 0;
+  margin: 0;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 720px) {
+  .service-selector__grid {
+    grid-template-columns: repeat(1, minmax(220px, 1fr));
+  }

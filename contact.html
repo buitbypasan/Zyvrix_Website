@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Zyvrix — Start your secure project</title>
+    <meta
+      name="description"
+      content="Reach out to Zyvrix to discuss your goals, security requirements, and delivery timeline."
+    />
+    <meta
+      name="keywords"
+      content="contact secure it developers, request security quote, talk to security developer, schedule discovery call"
+    />
+    <link rel="canonical" href="https://secureitdevelopers.com/contact" />
+    <meta
+      property="og:title"
+      content="Contact Zyvrix — Start your secure project"
+    />
+    <meta
+      property="og:description"
+      content="Reach out to Zyvrix to discuss your goals, security requirements, and delivery timeline."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://secureitdevelopers.com/contact" />
+    <meta property="og:image" content="assets/img/placeholder-team.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Contact Zyvrix — Start your secure project"
+    />
+    <meta
+      name="twitter:description"
+      content="Reach out to Zyvrix to discuss your goals, security requirements, and delivery timeline."
+    />
+    <meta name="twitter:image" content="assets/img/placeholder-team.svg" />
+    <link rel="icon" href="assets/img/favicon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="assets/js/env.js"></script>
+    <script type="module" src="assets/js/data/index.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script id="orgJsonLd" type="application/ld+json"></script>
+  </head>
+
+  <body data-page="contact">
+    <div id="pageLoader" class="page-loader" aria-hidden="true">
+      <div class="page-loader__spinner"></div>
+      <p>Loading Zyvrix…</p>
+    </div>
+    <header class="site-header" role="banner">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="Go to home">
+          <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" fill="currentColor" />
+          </svg>
+          <span data-bind="brandName"></span>
+        </a>
+        <button
+          id="mobileNavToggle"
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <nav
+          id="primaryNav"
+          class="primary-nav"
+          role="navigation"
+          aria-label="Primary"
+        ></nav>
+        <nav
+          id="mobileNav"
+          class="mobile-nav"
+          role="navigation"
+          aria-label="Mobile"
+          hidden
+        ></nav>
+        <button
+          id="themeToggle"
+          class="btn btn-ghost"
+          aria-pressed="false"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+    </header>
+
+    <main class="contact-page">
+      <section class="contact-page__hero container">
+        <h1>Contact</h1>
+        <p id="contactIntro" class="contact-page__intro"></p>
+      </section>
+      <section class="contact-page__content">
+        <div class="container">
+          <div class="contact-layout">
+            <form
+              id="contactForm2"
+              class="form contact-form"
+              novalidate
+              data-form-key="contact"
+            >
+              <div class="form-row form-row--split">
+                <div class="form-field">
+                  <label for="name2">Name</label>
+                  <input id="name2" name="name" autocomplete="name" required />
+                </div>
+                <div class="form-field">
+                  <label for="email2">Email</label>
+                  <input
+                    id="email2"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-row form-row--split">
+                <div class="form-field">
+                  <label for="budget">Budget (A$)</label>
+                  <input
+                    id="budget"
+                    name="budget"
+                    type="number"
+                    min="0"
+                    step="1000"
+                  />
+                </div>
+                <div class="form-field">
+                  <label for="timeline">Ideal start date</label>
+                  <input
+                    id="timeline"
+                    name="timeline"
+                    type="date"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <fieldset class="service-selector package-selector">
+                <legend>Select a starting package</legend>
+                <div id="contactPackages" class="service-selector__grid"></div>
+              </fieldset>
+              <fieldset class="service-selector">
+                <legend>
+                  Select services you're interested in (choose any)
+                </legend>
+                <div id="contactServices" class="service-selector__grid"></div>
+              </fieldset>
+              <div class="form-row">
+                <label for="message2">Project background</label>
+                <textarea
+                  id="message2"
+                  name="message"
+                  rows="5"
+                  placeholder="Outline goals, milestones, or blockers."
+                ></textarea>
+              </div>
+              <input type="hidden" name="form" value="Contact page" />
+              <div class="form-actions">
+                <button class="btn" type="submit">Send message</button>
+                <p id="contactStatus2" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+            <aside class="contact-info">
+              <h2 id="contactHeading"></h2>
+              <p class="contact-info__lede">
+                We respond within one business day and tailor every proposal to
+                your goals.
+              </p>
+              <ul id="contactDetails"></ul>
+              <div class="contact-meta">
+                <h3>Prefer a call?</h3>
+                <p>
+                  Book a quick discovery session so we can scope your security
+                  requirements together.
+                </p>
+                <a
+                  class="btn btn-ghost"
+                  href="mailto:hello@secureitdevelopers.com"
+                >
+                  Schedule a call
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div class="container footer-top__content">
+          <p class="footer-top__lead">
+            Get connected with us on social networks
+          </p>
+          <ul class="footer-social social" id="footerSocial"></ul>
+        </div>
+      </div>
+      <div class="footer-main container">
+        <div class="footer-column footer-column--about">
+          <h4>About</h4>
+          <p id="footerAbout"></p>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul id="footerContact" class="footer-contact"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Security</h4>
+          <ul id="footerSecurity" class="footer-security"></ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <nav id="footerPolicies" class="foot-links" aria-label="Legal"></nav>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom__content">
+          <span id="footerLegal"></span>
+          <a href="#" id="openCookie" class="link" data-no-loader="true"
+            >Cookie preferences</a
+          >
+        </div>
+      </div>
+    </footer>
+    <div
+      id="cookieBanner"
+      class="cookie-banner"
+      role="dialog"
+      aria-live="polite"
+      aria-label="Cookie notice"
+    >
+      <p>
+        We use cookies to improve your experience and for analytics.
+        <a href="#" class="link">Learn more</a>.
+      </p>
+      <div class="cookie-actions">
+        <button class="btn btn-ghost" data-cookie="reject">Reject</button>
+        <button class="btn" data-cookie="accept">Accept</button>
+      </div>
+    </div>
+  </body>
+</html>
