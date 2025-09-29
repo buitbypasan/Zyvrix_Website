@@ -239,6 +239,9 @@
 .spotlight-card .spotlight-socials .social {
   display: flex;
   gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .spotlight-card .spotlight-socials a {
