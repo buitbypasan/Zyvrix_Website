@@ -1,0 +1,31 @@
+name: Auto Deploy to Main Host
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TARGET_DIR: ${{ secrets.MAIN_HOST_TARGET_DIR }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync project files to host server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.MAIN_HOST }}
+          username: ${{ secrets.MAIN_HOST_USER }}
+          key: ${{ secrets.MAIN_HOST_SSH_KEY }}
+          port: ${{ secrets.MAIN_HOST_PORT }}
+          source: "."
+          target: ${{ env.TARGET_DIR != '' && env.TARGET_DIR || '/var/www/html' }}
+          strip_components: 0
+          overwrite: true
+          rm: true
+          include_hidden: true
+          debug: true
