@@ -15,7 +15,14 @@ $dotenv->safeLoad();
 
 $config = new Config($_ENV);
 $database = new Database($config);
-$pdo = $database->connection();
+
+try {
+    $pdo = $database->connection();
+} catch (\Throwable $exception) {
+    error_log($exception->getMessage());
+    send_json(503, ['ok' => false, 'error' => 'Service temporarily unavailable']);
+}
+
 $authService = new AuthService($pdo, $config);
 
 $allowedOrigins = $config->getCorsOrigins();
@@ -62,6 +69,10 @@ $body = file_get_contents('php://input');
 $payload = [];
 if ($body !== false && $body !== '') {
     $decoded = json_decode($body, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        send_json(400, ['ok' => false, 'error' => 'Invalid JSON payload']);
+    }
+
     if (is_array($decoded)) {
         $payload = $decoded;
     }

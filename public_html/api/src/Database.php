@@ -6,6 +6,7 @@ namespace App;
 
 use PDO;
 use PDOException;
+use RuntimeException;
 
 class Database
 {
@@ -31,6 +32,10 @@ class Database
             $settings['name']
         );
 
+        if ($settings['password'] === '') {
+            throw new RuntimeException('Database credentials are not configured.');
+        }
+
         try {
             $pdo = new PDO(
                 $dsn,
@@ -43,7 +48,8 @@ class Database
                 ]
             );
         } catch (PDOException $exception) {
-            throw new PDOException('Failed to connect to the database: ' . $exception->getMessage(), (int) $exception->getCode(), $exception);
+            error_log('Database connection failed: ' . $exception->getMessage());
+            throw new RuntimeException('Failed to connect to the database.', (int) $exception->getCode(), $exception);
         }
 
         $this->connection = $pdo;
