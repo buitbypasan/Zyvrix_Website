@@ -23,7 +23,7 @@ function normalizeMode(value) {
   const mode = String(value || "").toLowerCase();
   if (mode === SITE_MODES.ECOMMERCE) return SITE_MODES.ECOMMERCE;
   if (mode === SITE_MODES.BASIC) return SITE_MODES.BASIC;
-  return SITE_MODES.BASIC;
+  return SITE_MODES.ECOMMERCE;
 }
 
 function readStoredMode() {
@@ -37,6 +37,8 @@ function readStoredMode() {
     const envDefault = window.ENV?.site?.defaultMode;
     if (envDefault) {
       stored = envDefault;
+    } else {
+      stored = SITE_MODES.ECOMMERCE;
     }
   }
   return normalizeMode(stored);
