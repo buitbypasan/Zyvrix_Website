@@ -9,11 +9,25 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      TARGET_DIR: ${{ secrets.MAIN_HOST_TARGET_DIR }}
+      TARGET_DIR: ${{ secrets.MAIN_HOST_TARGET_DIR != '' && secrets.MAIN_HOST_TARGET_DIR || '/var/www/html' }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Clean target directory except env.local.js
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          TARGET_DIR: ${{ env.TARGET_DIR }}
+        with:
+          host: ${{ secrets.MAIN_HOST }}
+          username: ${{ secrets.MAIN_HOST_USER }}
+          key: ${{ secrets.MAIN_HOST_SSH_KEY }}
+          port: ${{ secrets.MAIN_HOST_PORT }}
+          script: |
+            TARGET_DIR="${TARGET_DIR:-/var/www/html}"
+            mkdir -p "$TARGET_DIR"
+            find "$TARGET_DIR" -mindepth 1 -maxdepth 1 ! -name 'env.local.js' -exec rm -rf {} +
 
       - name: Sync project files to host server
         uses: appleboy/scp-action@v0.1.7
@@ -23,7 +37,7 @@ jobs:
           key: ${{ secrets.MAIN_HOST_SSH_KEY }}
           port: ${{ secrets.MAIN_HOST_PORT }}
           source: "."
-          target: ${{ env.TARGET_DIR != '' && env.TARGET_DIR || '/var/www/html' }}
+          target: ${{ env.TARGET_DIR }}
           strip_components: 0
           overwrite: true
           rm: true
