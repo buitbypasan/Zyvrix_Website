@@ -9,7 +9,9 @@ let cachedMode;
 
 function normalizeMode(value) {
   const mode = String(value || "").toLowerCase();
-  return mode === SITE_MODES.BASIC ? SITE_MODES.BASIC : SITE_MODES.ECOMMERCE;
+  if (mode === SITE_MODES.ECOMMERCE) return SITE_MODES.ECOMMERCE;
+  if (mode === SITE_MODES.BASIC) return SITE_MODES.BASIC;
+  return SITE_MODES.BASIC;
 }
 
 function readStoredMode() {
