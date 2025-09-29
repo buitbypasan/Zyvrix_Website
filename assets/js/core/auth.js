@@ -274,8 +274,8 @@ function startSession(payload) {
   notifyAuthChange(customer);
 }
 
-function getAuthEndpoint(path = "") {
-  const base = (getConfig().endpoint || "/api/auth").trim();
+function getAuthEndpoint(path = "", baseOverride) {
+  const base = (baseOverride || getConfig().endpoint || "/api/auth").trim();
   try {
     const url = new URL(base, window.location.origin);
     const normalizedPath = path.replace(/^\/+/, "");
@@ -290,27 +290,59 @@ function getAuthEndpoint(path = "") {
   }
 }
 
+function getFallbackAuthEndpoint(path = "") {
+  const base = (getConfig().endpoint || "/api/auth").trim();
+  const normalized = base.replace(/\/+$/, "");
+  if (/\/public\/index\.php/i.test(normalized)) {
+    return null;
+  }
+  if (!/\/api\/auth$/i.test(normalized)) {
+    return null;
+  }
+  const fallbackBase = normalized.replace(
+    /\/api\/auth$/i,
+    "/api/public/index.php/api/auth"
+  );
+  if (fallbackBase === normalized) {
+    return null;
+  }
+  return getAuthEndpoint(path, fallbackBase);
+}
+
 async function postAuth(path, payload) {
   const endpoint = getAuthEndpoint(path);
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(payload || {}),
-    });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok || data.ok === false) {
-      const error = data.error || `Request failed with status ${response.status}`;
-      return { ok: false, status: response.status, error };
+  const attempt = async (url) => {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(payload || {}),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) {
+        const error = data.error || `Request failed with status ${response.status}`;
+        return { ok: false, status: response.status, error };
+      }
+      return { ok: true, status: response.status, data };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 0,
+        error: error?.message || "Unable to reach the authentication service.",
+      };
     }
-    return { ok: true, data };
-  } catch (error) {
-    return {
-      ok: false,
-      error: error?.message || "Unable to reach the authentication service.",
-    };
+  };
+
+  let result = await attempt(endpoint);
+  if (!result.ok && (result.status === 404 || result.status === 405)) {
+    const fallback = getFallbackAuthEndpoint(path);
+    if (fallback && fallback !== endpoint) {
+      result = await attempt(fallback);
+    }
   }
+
+  return result;
 }
 
 async function createCustomer({ name, email, password, role, accessCode }) {
