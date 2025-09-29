@@ -65,11 +65,11 @@ Edit the partial that matches the template you are working on; `assets/css/style
 
 ### Authentication API
 
-The front-end no longer stores customer accounts in `localStorage`. A lightweight Express API in `server/` persists customers to MySQL using the schema in `database/init.sql`. Passwords are hashed with bcrypt and never sent back to the browser.
+The front-end no longer stores customer accounts in `localStorage`. A lightweight PHP API in `public_html/api/` persists customers to MySQL using the schema in `database/init.sql`. Passwords are hashed with bcrypt and never sent back to the browser.
 
-1. Install dependencies with `npm install`.
-2. Copy your environment secrets into a `.env` file (see `server/config.js` for the variable names).
-3. Start the API with `npm run start` (defaults to port `4000`). The front-end will call `/api/auth/*` endpoints.
+1. Install dependencies with `composer install` inside `public_html/api/` (a `vendor/` directory is bundled for shared hosts without Composer access).
+2. Copy `.env.sample` to `.env` within `public_html/api/` and update it with your Hostinger database credentials plus any role codes.
+3. Deploy the contents of `public_html/api/` to your hosting account; point requests for `/api/*` to `public_html/api/public/index.php` (the included `.htaccess` handles URL rewriting). The front-end will call `/api/auth/*` endpoints.
 
 ## Local development tips
 
