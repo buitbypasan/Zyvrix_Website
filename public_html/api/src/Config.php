@@ -68,7 +68,7 @@ class Config
             'port' => $this->getInt('DB_PORT', 3306),
             'name' => (string) $this->get('DB_NAME', 'secure_it'),
             'user' => (string) $this->get('DB_USER', 'secure_app'),
-            'password' => (string) $this->get('DB_PASSWORD', ''),
+            'password' => $this->resolveDatabasePassword(),
         ];
     }
 
@@ -124,5 +124,77 @@ class Config
             'loyalty' => 'loyalty',
             default => 'basic',
         };
+    }
+
+    private function resolveDatabasePassword(): string
+    {
+        $direct = (string) ($this->get('DB_PASSWORD', '') ?? '');
+        if ($direct !== '') {
+            return $direct;
+        }
+
+        $candidates = [];
+        $configuredEnv = (string) ($this->get('DB_PASSWORD_ENV', '') ?? '');
+        if ($configuredEnv !== '') {
+            $candidates[] = $configuredEnv;
+        }
+
+        // Default fallbacks: project-specific env var plus the deployment-provided secret name.
+        $defaults = [
+            'SECURE_IT_DB_PASSWORD',
+            'Pasanaa..Rath@213580',
+        ];
+
+        foreach ($defaults as $name) {
+            if (!in_array($name, $candidates, true)) {
+                $candidates[] = $name;
+            }
+        }
+
+        foreach ($candidates as $candidate) {
+            $secret = $this->readEnvironmentValue($candidate);
+            if ($secret !== null && $secret !== '') {
+                return $secret;
+            }
+        }
+
+        return '';
+    }
+
+    private function readEnvironmentValue(string $name): ?string
+    {
+        $sources = [$_ENV, $_SERVER];
+        foreach ($sources as $source) {
+            if (is_array($source) && array_key_exists($name, $source)) {
+                $value = $source[$name];
+                if ($value !== null && $value !== '') {
+                    return (string) $value;
+                }
+            }
+        }
+
+        $value = getenv($name);
+        if ($value !== false && $value !== '') {
+            return (string) $value;
+        }
+
+        $normalized = preg_replace('/[^A-Z0-9_]/i', '_', $name);
+        if ($normalized !== '' && $normalized !== $name) {
+            foreach ($sources as $source) {
+                if (is_array($source) && array_key_exists($normalized, $source)) {
+                    $value = $source[$normalized];
+                    if ($value !== null && $value !== '') {
+                        return (string) $value;
+                    }
+                }
+            }
+
+            $value = getenv($normalized);
+            if ($value !== false && $value !== '') {
+                return (string) $value;
+            }
+        }
+
+        return null;
     }
 }

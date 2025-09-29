@@ -50,14 +50,25 @@ class AuthService
             return $this->error(400, 'Password must be at least 8 characters.');
         }
 
-        $existing = $this->fetchCustomerByEmail($email);
+        try {
+            $existing = $this->fetchCustomerByEmail($email);
+        } catch (Throwable $exception) {
+            error_log('Customer lookup failed during signup: ' . $exception->getMessage());
+            return $this->error(500, 'Unable to verify existing accounts right now.');
+        }
         if ($existing !== null) {
             return $this->error(409, 'An account with that email already exists.');
         }
 
         $authConfig = $this->config->getAuthConfig();
         $role = resolve_role($requestedRole, $accessCode, $authConfig['roleCodes'], $authConfig['defaultRole']);
-        $credentials = $this->createPasswordHash($password, $authConfig['bcryptRounds']);
+
+        try {
+            $credentials = $this->createPasswordHash($password, $authConfig['bcryptRounds']);
+        } catch (Throwable $exception) {
+            error_log('Failed to hash user password: ' . $exception->getMessage());
+            return $this->error(500, 'Unable to secure the account credentials.');
+        }
 
         try {
             $statement = $this->pdo->prepare('INSERT INTO customers (full_name, email, password_hash, salt, role, provider) VALUES (:name, :email, :hash, :salt, :role, :provider)');
@@ -107,7 +118,12 @@ class AuthService
             return $this->error(400, 'Email and password are required.');
         }
 
-        $record = $this->fetchCustomerByEmail($email);
+        try {
+            $record = $this->fetchCustomerByEmail($email);
+        } catch (Throwable $exception) {
+            error_log('Customer lookup failed during login: ' . $exception->getMessage());
+            return $this->error(500, 'Login is temporarily unavailable. Please try again later.');
+        }
         if ($record === null) {
             return $this->error(401, 'No account found for that email.');
         }
@@ -145,13 +161,23 @@ class AuthService
             return $this->error(400, 'Provider sign-in requires an email address.');
         }
 
-        $record = $this->fetchCustomerByEmail($email);
+        try {
+            $record = $this->fetchCustomerByEmail($email);
+        } catch (Throwable $exception) {
+            error_log('Customer lookup failed during provider sign-in: ' . $exception->getMessage());
+            return $this->error(500, 'Provider sign-in is temporarily unavailable.');
+        }
         $authConfig = $this->config->getAuthConfig();
 
         if ($record === null) {
             $resolvedName = $nameInput !== '' ? $nameInput : $email;
             $randomPassword = bin2hex(random_bytes(24));
-            $credentials = $this->createPasswordHash($randomPassword, $authConfig['bcryptRounds']);
+            try {
+                $credentials = $this->createPasswordHash($randomPassword, $authConfig['bcryptRounds']);
+            } catch (Throwable $exception) {
+                error_log('Failed to hash provider password: ' . $exception->getMessage());
+                return $this->error(500, 'Failed to create provider account.');
+            }
             $role = normalize_role($authConfig['defaultProviderRole']);
 
             try {
@@ -242,8 +268,13 @@ class AuthService
      */
     private function fetchCustomerByEmail(string $email): ?array
     {
-        $statement = $this->pdo->prepare('SELECT id, full_name, email, password_hash, role, provider FROM customers WHERE email = :email LIMIT 1');
-        $statement->execute([':email' => $email]);
+        try {
+            $statement = $this->pdo->prepare('SELECT id, full_name, email, password_hash, role, provider FROM customers WHERE email = :email LIMIT 1');
+            $statement->execute([':email' => $email]);
+        } catch (PDOException $exception) {
+            throw new RuntimeException('Failed to query customer records.', (int) $exception->getCode(), $exception);
+        }
+
         $row = $statement->fetch();
 
         if ($row === false) {
