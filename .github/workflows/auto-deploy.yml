@@ -27,7 +27,9 @@ jobs:
           script: |
             TARGET_DIR="${TARGET_DIR:-/var/www/html}"
             mkdir -p "$TARGET_DIR"
-            find "$TARGET_DIR" -mindepth 1 -maxdepth 1 ! -name 'env.local.js' -exec rm -rf {} +
+            if ! find "$TARGET_DIR" -mindepth 1 -maxdepth 1 ! -name 'env.local.js' -exec rm -rf {} + 2>/dev/null; then
+              echo "Warning: Some files could not be removed from $TARGET_DIR (possibly read-only)."
+            fi
 
       - name: Sync project files to host server
         uses: appleboy/scp-action@v0.1.7
