@@ -887,19 +887,29 @@
 }
 .cookie-banner {
   position: fixed;
-  inset: auto 12px 12px 12px;
+  left: 50%;
+  right: auto;
+  bottom: 12px;
+  top: auto;
+  transform: translateX(-50%);
+  width: min(90vw, 520px);
   background: var(--card);
   border: 1px solid var(--border);
-  padding: 12px;
-  border-radius: 10px;
+  padding: 16px;
+  border-radius: 12px;
   display: none;
-  gap: 12px;
+  flex-direction: column;
+  gap: 16px;
   align-items: center;
-  justify-content: space-between;
+  text-align: center;
+  box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--shadow) 80%, transparent);
 }
 .cookie-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 .subnav {
   display: flex;

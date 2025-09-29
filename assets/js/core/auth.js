@@ -21,6 +21,7 @@ const ROLE_LABELS = {
 };
 const DEFAULT_ROLE = "basic";
 const FORM_REQUIRED_DATA_ATTR = "authStoredRequired";
+const AUTH_FALLBACK_ID = "authUnavailable";
 
 function normalizeRole(role) {
   const value = String(role || "").toLowerCase().trim();
@@ -614,6 +615,68 @@ function getAuthUnavailableMessage(context = "login") {
     : "Customer logins are available when the e-commerce experience is enabled.";
 }
 
+function getAuthFallbackCopy(context = "login") {
+  if (context === "signup") {
+    return {
+      title: "Account creation unavailable",
+      description:
+        "Switch to the e-commerce experience to create an account and save your checkout progress.",
+    };
+  }
+  return {
+    title: "Customer login unavailable",
+    description:
+      "Switch to the e-commerce experience to access saved carts and manage billing securely.",
+  };
+}
+
+function showAuthUnavailableFallback(context = "login") {
+  const main = document.getElementById("main") || document.querySelector("main");
+  if (!main) return;
+  const copy = getAuthFallbackCopy(context);
+  let fallback = document.getElementById(AUTH_FALLBACK_ID);
+  if (!fallback) {
+    fallback = document.createElement("section");
+    fallback.id = AUTH_FALLBACK_ID;
+    fallback.className = "container ecommerce-disabled";
+    fallback.setAttribute("role", "status");
+    const authCard = main.querySelector(".auth-card");
+    if (authCard?.insertAdjacentElement) {
+      authCard.insertAdjacentElement("afterend", fallback);
+    } else {
+      main.appendChild(fallback);
+    }
+  }
+  fallback.innerHTML = `
+    <div class="ecommerce-disabled__icon" aria-hidden="true">🔒</div>
+    <h1>${copy.title}</h1>
+    <p>${copy.description}</p>
+    <p class="muted">${getAuthUnavailableMessage(context)}</p>
+  `;
+  fallback.hidden = false;
+}
+
+function hideAuthUnavailableFallback() {
+  const fallback = document.getElementById(AUTH_FALLBACK_ID);
+  if (fallback) {
+    fallback.hidden = true;
+  }
+}
+
+function updateAuthPageAvailabilityState(available) {
+  const page = document.body?.dataset?.page || "";
+  if (page !== "login" && page !== "signup") return;
+  const authCard = document.querySelector(".auth-card");
+  if (authCard) {
+    authCard.toggleAttribute("hidden", !available);
+  }
+  if (!available) {
+    showAuthUnavailableFallback(page);
+  } else {
+    hideAuthUnavailableFallback();
+  }
+}
+
 function toggleFormAvailability(form, status, available, message) {
   if (!form) return;
   const controls = form.querySelectorAll("input, button, select, textarea");
@@ -669,6 +732,7 @@ function updateAuthFormsAvailability() {
     noticeMessage = signupForm ? signupMessage : loginMessage;
   }
   showAuthModeNotice(noticeMessage);
+  updateAuthPageAvailabilityState(available);
 }
 
 function renderAuthControls() {
