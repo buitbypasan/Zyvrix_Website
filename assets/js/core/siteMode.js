@@ -6,6 +6,18 @@ export const SITE_MODES = {
 export const SITE_MODE_EVENT = "site:mode";
 
 let cachedMode;
+let storageListenerBound = false;
+
+function syncMode(mode) {
+  const normalized = normalizeMode(mode);
+  if (normalized === cachedMode) {
+    return normalized;
+  }
+  cachedMode = normalized;
+  applyMode(normalized);
+  dispatchModeChange(normalized);
+  return normalized;
+}
 
 function normalizeMode(value) {
   const mode = String(value || "").toLowerCase();
@@ -63,23 +75,34 @@ export function isEcommerceEnabled() {
 
 export function setSiteMode(mode) {
   const normalized = normalizeMode(mode);
-  cachedMode = normalized;
   try {
     localStorage.setItem(STORAGE_KEY, normalized);
   } catch (error) {
     /* ignore storage errors (private mode, etc.) */
   }
-  applyMode(normalized);
-  dispatchModeChange(normalized);
-  return normalized;
+  return syncMode(normalized);
 }
 
 export function toggleSiteMode() {
   return setSiteMode(isEcommerceEnabled() ? SITE_MODES.BASIC : SITE_MODES.ECOMMERCE);
 }
 
+function bindStorageListener() {
+  if (storageListenerBound || typeof window === "undefined") return;
+  try {
+    window.addEventListener("storage", (event) => {
+      if (event.key && event.key !== STORAGE_KEY) return;
+      syncMode(event.newValue);
+    });
+    storageListenerBound = true;
+  } catch (error) {
+    storageListenerBound = false;
+  }
+}
+
 export function initSiteMode() {
   applyMode(getSiteMode());
+  bindStorageListener();
 }
 
 export function renderEcommerceDisabled(options = {}) {
