@@ -9,10 +9,17 @@ import { renderCheckoutPage } from "../renderers/checkout.js";
 import { renderPaymentPage } from "../renderers/payment.js";
 import { renderDetailPage } from "../renderers/detail.js";
 import { renderLegalPage } from "../renderers/legal.js";
-import { isEcommerceEnabled } from "./siteMode.js";
+import { isEcommerceEnabled, SITE_MODE_EVENT } from "./siteMode.js";
 
-export function hydrateSite(data) {
-  const pageKey = document.body?.dataset?.page || "home";
+let cachedData = null;
+let modeListenerBound = false;
+
+function getPageKey() {
+  return document.body?.dataset?.page || "home";
+}
+
+function renderSite(data) {
+  const pageKey = getPageKey();
   applyBranding(data);
   applyNavigation(data, pageKey);
   applyFooter(data);
@@ -20,6 +27,21 @@ export function hydrateSite(data) {
   injectOrganizationSchema(data);
   injectServiceSchema(data);
   renderPage(pageKey, data);
+}
+
+function bindModeListener() {
+  if (modeListenerBound || typeof document === "undefined") return;
+  document.addEventListener(SITE_MODE_EVENT, () => {
+    if (!cachedData) return;
+    renderSite(cachedData);
+  });
+  modeListenerBound = true;
+}
+
+export function hydrateSite(data) {
+  cachedData = data;
+  renderSite(data);
+  bindModeListener();
 }
 
 function applyBranding(data) {
