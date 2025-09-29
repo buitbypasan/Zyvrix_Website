@@ -186,10 +186,16 @@ export const homePage = {
   },
   contact: {
     heading: "Ready to scope your project?",
+    basicHeading: "Tell us about your project",
     points: [
       "Get a tailored roadmap and investment range in 48 hours",
       "Security and performance baked into every sprint",
       "Flexible retainers for iterative product delivery",
+    ],
+    basicPoints: [
+      "Share your goals and we'll organise a discovery call",
+      "Security guidance without the full commerce experience",
+      "Personal replies from the founders within one business day",
     ],
   },
 };
