@@ -520,6 +520,16 @@
   padding: 14px 18px;
 }
 
+.custom-invoice__table thead th:nth-child(2),
+.custom-invoice__table thead th:nth-child(3) {
+  text-align: center;
+}
+
+.custom-invoice__table thead th:nth-child(4),
+.custom-invoice__table thead th:nth-child(5) {
+  text-align: right;
+}
+
 .custom-invoice__table tbody th,
 .custom-invoice__table tbody td {
   padding: 16px 18px;
@@ -543,27 +553,64 @@
   background: color-mix(in srgb, var(--card) 92%, #fff 8%);
 }
 
-.custom-invoice__table tbody td:nth-child(2),
-.custom-invoice__table tbody td:nth-child(3),
-.custom-invoice__table tbody td:nth-child(4) {
+.custom-invoice__cell {
+  background: inherit;
+}
+
+.custom-invoice__cell--qty {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.custom-invoice__cell--unit {
+  text-align: center;
+  font-weight: 600;
+  text-transform: lowercase;
+  color: color-mix(in srgb, var(--muted) 65%, var(--text) 35%);
+}
+
+.custom-invoice__cell--rate,
+.custom-invoice__cell--amount,
+.custom-invoice__total-amount {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
+.custom-invoice__cell--placeholder {
+  text-align: center;
+  color: color-mix(in srgb, var(--muted) 68%, var(--text) 32%);
+  font-style: italic;
+}
+
 .custom-invoice__table tfoot td {
   padding: 14px 18px;
-  text-align: right;
-  font-weight: 600;
   background: color-mix(in srgb, var(--card) 94%, #fff 6%);
-  font-variant-numeric: tabular-nums;
 }
 
 .custom-invoice__table tfoot tr + tr td {
   border-top: 1px solid color-mix(in srgb, var(--border) 86%, transparent);
 }
 
-.custom-invoice__grand-total td {
-  font-size: 1.1rem;
+.custom-invoice__total-label {
+  text-align: right;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 65%, var(--text) 35%);
+}
+
+.custom-invoice__total-amount {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--text) 85%, #0f172a 15%);
+}
+
+.custom-invoice__grand-total .custom-invoice__total-label {
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--brand) 45%, var(--text) 55%);
+}
+
+.custom-invoice__grand-total .custom-invoice__total-amount {
+  font-size: 1.15rem;
   color: color-mix(in srgb, var(--brand) 70%, var(--text) 30%);
 }
 
@@ -918,29 +965,39 @@
   flex-wrap: wrap;
 }
 .chip {
-  padding: 8px 16px;
-  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
-  background: color-mix(in srgb, var(--bg) 85%, var(--card) 15%);
+  position: relative;
+  padding: 10px 20px;
   border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, var(--border));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--card) 92%, rgba(79, 70, 229, 0.08)),
+    color-mix(in srgb, var(--card) 86%, rgba(37, 99, 235, 0.1))
+  );
   cursor: pointer;
-  color: color-mix(in srgb, var(--text) 88%, var(--muted) 12%);
+  color: color-mix(in srgb, var(--text) 88%, var(--brand) 12%);
   font-weight: 600;
-  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease,
-    box-shadow 0.3s ease;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease, background 0.25s ease;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
 }
 .chip:hover {
-  border-color: color-mix(in srgb, var(--brand) 40%, var(--border));
-  color: var(--brand);
+  border-color: color-mix(in srgb, var(--brand) 55%, var(--border));
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(37, 99, 235, 0.18);
 }
 .chip:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 35%, transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 45%, transparent),
+    0 16px 28px rgba(37, 99, 235, 0.2);
 }
 .chip.active {
-  border-color: var(--brand);
-  background: color-mix(in srgb, var(--brand) 20%, var(--card));
-  color: var(--brand);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent);
+  border-color: transparent;
+  background: linear-gradient(135deg, #6366f1, #2563eb);
+  color: #fff;
+  box-shadow: 0 20px 34px rgba(79, 70, 229, 0.32);
 }
 
 .package-deep-dive {
@@ -957,12 +1014,79 @@
 
 .detail-grid {
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: stretch;
 }
 
-.detail-card { 
-  background: color-mix(in srgb, var(--card) 95%, var(--bg) 5%);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px;
+.detail-grid .detail-card {
+  display: grid;
+  gap: 16px;
+  padding: 28px;
+  border-radius: 22px;
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--card) 96%, rgba(76, 29, 149, 0.08)),
+    color-mix(in srgb, var(--card) 90%, rgba(37, 99, 235, 0.12))
+  );
+  border: 1px solid color-mix(in srgb, var(--brand) 18%, var(--border));
+  box-shadow: 0 22px 38px rgba(15, 23, 42, 0.12);
+  height: 100%;
+}
+
+.detail-grid .detail-card header {
+  display: grid;
+  gap: 6px;
+}
+
+.detail-grid .detail-card .eyebrow {
+  color: color-mix(in srgb, var(--brand) 55%, var(--muted) 45%);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.detail-grid .detail-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.detail-grid .detail-card p {
+  margin: 0;
+  color: color-mix(in srgb, var(--muted) 78%, var(--text) 22%);
+  line-height: 1.6;
+}
+
+.detail-grid .detail-card ul {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+  color: color-mix(in srgb, var(--muted) 80%, var(--text) 20%);
+}
+
+.detail-grid .detail-card .detail-price {
+  color: color-mix(in srgb, var(--brand) 65%, var(--text) 35%);
+  font-weight: 700;
+}
+
+.detail-grid .detail-card .detail-link {
+  margin-top: auto;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--brand) 78%, var(--text) 22%);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-grid .detail-card .detail-link::after {
+  content: "→";
+  font-size: 0.9em;
+  transition: transform 0.2s ease;
+}
+
+.detail-grid .detail-card .detail-link:hover::after {
+  transform: translateX(4px);
+}

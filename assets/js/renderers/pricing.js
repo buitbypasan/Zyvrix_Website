@@ -491,6 +491,7 @@ function buildInvoiceCard(custom, invoice, metrics, data) {
       <tr>
         <th scope="col">Item & description</th>
         <th scope="col">Qty</th>
+        <th scope="col">Unit</th>
         <th scope="col">Rate</th>
         <th scope="col">Amount</th>
       </tr>
@@ -506,7 +507,8 @@ function buildInvoiceCard(custom, invoice, metrics, data) {
     cell.textContent = "Scope to be finalised with your delivery team.";
     row.appendChild(cell);
     const placeholder = document.createElement("td");
-    placeholder.colSpan = 3;
+    placeholder.colSpan = 4;
+    placeholder.className = "custom-invoice__cell custom-invoice__cell--placeholder";
     placeholder.textContent = "—";
     row.appendChild(placeholder);
     tbody.appendChild(row);
@@ -518,15 +520,22 @@ function buildInvoiceCard(custom, invoice, metrics, data) {
       description.textContent =
         item.description || "Custom engagement component";
       const quantity = document.createElement("td");
-      const qtyParts = [];
-      if (item.quantity !== undefined && item.quantity !== null) {
-        qtyParts.push(String(item.quantity));
+      quantity.className = "custom-invoice__cell custom-invoice__cell--qty";
+      if (typeof item.quantity === "number" && !Number.isNaN(item.quantity)) {
+        quantity.textContent = String(item.quantity);
+      } else if (item.quantity) {
+        quantity.textContent = String(item.quantity);
+      } else {
+        quantity.textContent = "—";
       }
-      if (item.unit) qtyParts.push(item.unit);
-      quantity.textContent = qtyParts.join(" ") || "—";
+      const unit = document.createElement("td");
+      unit.className = "custom-invoice__cell custom-invoice__cell--unit";
+      unit.textContent = item.unit || "—";
       const rate = document.createElement("td");
+      rate.className = "custom-invoice__cell custom-invoice__cell--rate";
       rate.textContent = formatAmount(item.rate, currency) || "—";
       const amount = document.createElement("td");
+      amount.className = "custom-invoice__cell custom-invoice__cell--amount";
       const fallbackAmount =
         typeof item.rate === "number" && typeof item.quantity === "number"
           ? item.rate * item.quantity
@@ -537,6 +546,7 @@ function buildInvoiceCard(custom, invoice, metrics, data) {
         "—";
       row.appendChild(description);
       row.appendChild(quantity);
+      row.appendChild(unit);
       row.appendChild(rate);
       row.appendChild(amount);
       tbody.appendChild(row);
@@ -561,9 +571,11 @@ function buildInvoiceCard(custom, invoice, metrics, data) {
       const row = document.createElement("tr");
       if (total.className) row.className = total.className;
       const label = document.createElement("td");
-      label.colSpan = 3;
+      label.colSpan = 4;
+      label.className = "custom-invoice__total-label";
       label.textContent = total.label;
       const amount = document.createElement("td");
+      amount.className = "custom-invoice__total-amount";
       amount.textContent = total.value;
       row.appendChild(label);
       row.appendChild(amount);
@@ -726,16 +738,17 @@ function buildInvoiceLines(custom, invoice, metrics, data) {
   }
 
   lines.push("Items:");
-  lines.push("Description | Qty | Rate | Amount");
+  lines.push("Description | Qty | Unit | Rate | Amount");
   const items = Array.isArray(invoice.lineItems) ? invoice.lineItems : [];
   if (items.length) {
     items.forEach((item) => {
-      const qtyParts = [];
-      if (item.quantity !== undefined && item.quantity !== null) {
-        qtyParts.push(String(item.quantity));
+      let qty = "—";
+      if (typeof item.quantity === "number" && !Number.isNaN(item.quantity)) {
+        qty = String(item.quantity);
+      } else if (item.quantity) {
+        qty = String(item.quantity);
       }
-      if (item.unit) qtyParts.push(item.unit);
-      const qty = qtyParts.join(" ") || "—";
+      const unit = item.unit || "—";
       const rate = formatAmount(item.rate, currency) || "—";
       const fallbackAmount =
         typeof item.rate === "number" && typeof item.quantity === "number"
@@ -745,10 +758,12 @@ function buildInvoiceLines(custom, invoice, metrics, data) {
         formatAmount(item.total, currency) ||
         formatAmount(fallbackAmount, currency) ||
         "—";
-      lines.push(`${item.description || "Custom engagement component"} | ${qty} | ${rate} | ${amount}`);
+      lines.push(
+        `${item.description || "Custom engagement component"} | ${qty} | ${unit} | ${rate} | ${amount}`
+      );
     });
   } else {
-    lines.push("Scope to be finalised with your delivery team. | — | — | —");
+    lines.push("Scope to be finalised with your delivery team. | — | — | — | —");
   }
   lines.push("");
 
