@@ -220,13 +220,11 @@ function updateBadge() {
   if (countEl) {
     countEl.textContent = count;
   }
-  document
-    .querySelectorAll("[data-cart-count]")
-    .forEach((element) => {
-      if (element.id !== CART_COUNT_ID) {
-        element.textContent = count;
-      }
-    });
+  document.querySelectorAll("[data-cart-count]").forEach((element) => {
+    if (element.id !== CART_COUNT_ID) {
+      element.textContent = count;
+    }
+  });
   const checkoutButton = byId("cartCheckoutButton");
   if (checkoutButton) {
     checkoutButton.classList.toggle("is-disabled", !cartIds.size);
@@ -243,7 +241,8 @@ function renderCartItems() {
     .filter(Boolean);
   container.innerHTML = "";
   if (!items.length) {
-    container.innerHTML = '<p class="cart-empty muted">Your cart is currently empty.</p>';
+    container.innerHTML =
+      '<p class="cart-empty muted">Your cart is currently empty.</p>';
     const total = byId(CART_TOTAL_ID);
     if (total) total.textContent = "0";
     return;
@@ -254,21 +253,28 @@ function renderCartItems() {
   items.forEach((item) => {
     const li = document.createElement("li");
     li.className = "cart-line-item";
-    const price = Number.isFinite(Number(item.price)) ? Number(item.price) : null;
+    const price = Number.isFinite(Number(item.price))
+      ? Number(item.price)
+      : null;
     if (price !== null) {
       totalAmount += price;
     }
-    const priceLabel = price !== null
-      ? formatCurrency(price, billingCurrency)
-      : item.priceLabel || "";
+    const priceLabel =
+      price !== null
+        ? formatCurrency(price, billingCurrency)
+        : item.priceLabel || "";
     li.innerHTML = `
       <div>
         <strong>${item.title}</strong>
-        <span class="cart-line-item__meta">${item.category || "Consulting"}</span>
+        <span class="cart-line-item__meta">${
+          item.category || "Consulting"
+        }</span>
       </div>
       <div class="cart-line-item__actions">
         <span class="cart-line-item__price">${priceLabel}</span>
-        <button type="button" class="btn btn-ghost cart-remove" data-cart-remove="${item.id}">Remove</button>
+        <button type="button" class="btn btn-ghost cart-remove" data-cart-remove="${
+          item.id
+        }">Remove</button>
       </div>
     `;
     list.appendChild(li);

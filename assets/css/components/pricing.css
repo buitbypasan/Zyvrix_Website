@@ -705,7 +705,6 @@
 }
 
 .site-footer {
-.site-footer {
   margin-top: 80px;
   background: linear-gradient(180deg, #5b21b6 0%, #1e1b4b 45%, #0b1220 100%);
   color: #fff;
@@ -935,10 +934,8 @@
 .cookie-banner {
   position: fixed;
   left: 50%;
-  right: auto;
-  bottom: 12px;
-  top: auto;
   transform: translateX(-50%);
+  bottom: 12px;
   width: min(90vw, 520px);
   background: var(--card);
   border: 1px solid var(--border);
@@ -950,6 +947,7 @@
   align-items: center;
   text-align: center;
   box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--shadow) 80%, transparent);
+  z-index: 9999; /* 👈 ensures it's in front */
 }
 .cookie-actions {
   display: flex;

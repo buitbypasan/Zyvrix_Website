@@ -1,5 +1,10 @@
 import { byId } from "./utils.js";
-import { isEcommerceEnabled, setSiteMode, SITE_MODE_EVENT, SITE_MODES } from "./siteMode.js";
+import {
+  isEcommerceEnabled,
+  setSiteMode,
+  SITE_MODE_EVENT,
+  SITE_MODES,
+} from "./siteMode.js";
 
 const DEFAULT_NAMESPACE = "secure_it";
 const DEFAULT_SESSION_TTL_HOURS = 72;
@@ -24,7 +29,9 @@ const FORM_REQUIRED_DATA_ATTR = "authStoredRequired";
 const AUTH_FALLBACK_ID = "authUnavailable";
 
 function normalizeRole(role) {
-  const value = String(role || "").toLowerCase().trim();
+  const value = String(role || "")
+    .toLowerCase()
+    .trim();
   if (value === "loyalty_customer" || value === "loyalty-customers") {
     return "loyalty";
   }
@@ -55,8 +62,9 @@ function resolveRole(requestedRole, accessCode) {
   const codes = getRoleCodes();
   const trimmedCode = String(accessCode || "").trim();
   if (trimmedCode) {
-    const match = Object.entries(codes).find(([, code]) =>
-      String(code || "").toLowerCase() === trimmedCode.toLowerCase()
+    const match = Object.entries(codes).find(
+      ([, code]) =>
+        String(code || "").toLowerCase() === trimmedCode.toLowerCase()
     );
     if (match) {
       return normalizeRole(match[0]);
@@ -100,8 +108,12 @@ function getNamespace() {
 }
 
 function getSessionTtlMs() {
-  const hours = Number(getConfig().sessionTtlHours || DEFAULT_SESSION_TTL_HOURS);
-  return Number.isFinite(hours) ? hours * 60 * 60 * 1000 : DEFAULT_SESSION_TTL_HOURS * 60 * 60 * 1000;
+  const hours = Number(
+    getConfig().sessionTtlHours || DEFAULT_SESSION_TTL_HOURS
+  );
+  return Number.isFinite(hours)
+    ? hours * 60 * 60 * 1000
+    : DEFAULT_SESSION_TTL_HOURS * 60 * 60 * 1000;
 }
 
 function getGoogleConfig() {
@@ -156,7 +168,8 @@ function loadGoogleScript() {
     script.async = true;
     script.defer = true;
     script.onload = () => resolve(window.google);
-    script.onerror = () => reject(new Error("Failed to load Google Identity Services"));
+    script.onerror = () =>
+      reject(new Error("Failed to load Google Identity Services"));
     document.head.appendChild(script);
   });
   return googleScriptPromise;
@@ -246,7 +259,9 @@ function startSession(payload) {
   if (!customer?.id) return;
   const createdDate = (() => {
     try {
-      return baseSession.createdAt ? new Date(baseSession.createdAt) : new Date();
+      return baseSession.createdAt
+        ? new Date(baseSession.createdAt)
+        : new Date();
     } catch (error) {
       return new Date();
     }
@@ -286,7 +301,9 @@ function getAuthEndpoint(path = "", baseOverride) {
   } catch (error) {
     const normalizedBase = base.replace(/\/$/, "");
     const normalizedPath = path.replace(/^\/+/, "");
-    return normalizedPath ? `${normalizedBase}/${normalizedPath}` : normalizedBase;
+    return normalizedPath
+      ? `${normalizedBase}/${normalizedPath}`
+      : normalizedBase;
   }
 }
 
@@ -321,7 +338,8 @@ async function postAuth(path, payload) {
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || data.ok === false) {
-        const error = data.error || `Request failed with status ${response.status}`;
+        const error =
+          data.error || `Request failed with status ${response.status}`;
         return { ok: false, status: response.status, error };
       }
       return { ok: true, status: response.status, data };
@@ -535,7 +553,9 @@ function renderMobileAdminControls(customer) {
   block.setAttribute("data-admin-nav", "");
   const label = document.createElement("p");
   label.className = "mobile-admin__label";
-  label.textContent = isEcommerceEnabled() ? "Mode: E-commerce" : "Mode: Normal site";
+  label.textContent = isEcommerceEnabled()
+    ? "Mode: E-commerce"
+    : "Mode: Normal site";
   const toggle = document.createElement("button");
   toggle.type = "button";
   toggle.className = "btn btn-ghost";
@@ -586,7 +606,8 @@ function handleModeToggle(event) {
   if (!customer || normalizeRole(customer.role) !== "admin") return;
   event.preventDefault();
   const requested = toggle.getAttribute("data-site-mode-toggle");
-  const targetMode = requested === SITE_MODES.BASIC ? SITE_MODES.BASIC : SITE_MODES.ECOMMERCE;
+  const targetMode =
+    requested === SITE_MODES.BASIC ? SITE_MODES.BASIC : SITE_MODES.ECOMMERCE;
   setSiteMode(targetMode);
   showAuthStatus(
     targetMode === SITE_MODES.BASIC
@@ -663,7 +684,8 @@ function getAuthFallbackCopy(context = "login") {
 }
 
 function showAuthUnavailableFallback(context = "login") {
-  const main = document.getElementById("main") || document.querySelector("main");
+  const main =
+    document.getElementById("main") || document.querySelector("main");
   if (!main) return;
   const copy = getAuthFallbackCopy(context);
   let fallback = document.getElementById(AUTH_FALLBACK_ID);
@@ -865,7 +887,8 @@ function handleSignup() {
       return;
     }
     if (password.length < 8) {
-      if (status) status.textContent = "Password must be at least 8 characters.";
+      if (status)
+        status.textContent = "Password must be at least 8 characters.";
       return;
     }
     if (password !== confirm) {
@@ -889,7 +912,8 @@ function handleSignup() {
       status.textContent = `Account created! Signed in as ${getRoleLabel(
         result.customer.role
       )}. Redirecting…`;
-    const redirect = getRedirectParam() || getDefaultRedirect(result.customer.role, "signup");
+    const redirect =
+      getRedirectParam() || getDefaultRedirect(result.customer.role, "signup");
     setTimeout(() => {
       window.location.href = redirect;
     }, 800);
@@ -924,7 +948,8 @@ function handleLogin() {
       status.textContent = `Welcome back, ${getRoleLabel(
         result.customer.role
       )}! Redirecting…`;
-    const redirect = getRedirectParam() || getDefaultRedirect(result.customer.role);
+    const redirect =
+      getRedirectParam() || getDefaultRedirect(result.customer.role);
     setTimeout(() => {
       window.location.href = redirect;
     }, 600);
@@ -974,7 +999,9 @@ async function handleGoogleCredential(response, context = "login") {
     return;
   }
   const fullName =
-    profile.name || `${profile.given_name || ""} ${profile.family_name || ""}`.trim() || profile.email;
+    profile.name ||
+    `${profile.given_name || ""} ${profile.family_name || ""}`.trim() ||
+    profile.email;
   if (status) status.textContent = "Signing in with Google…";
   const result = await upsertProviderCustomer({
     name: fullName,
@@ -982,7 +1009,8 @@ async function handleGoogleCredential(response, context = "login") {
     provider: "google",
   });
   if (!result.ok) {
-    if (status) status.textContent = result.error || "Unable to sign in with Google.";
+    if (status)
+      status.textContent = result.error || "Unable to sign in with Google.";
     return;
   }
   startSession(result.session || result.customer);
@@ -991,7 +1019,11 @@ async function handleGoogleCredential(response, context = "login") {
       result.customer.role
     )}. Redirecting…`;
   const redirect =
-    getRedirectParam() || getDefaultRedirect(result.customer.role, context === "signup" ? "signup" : "login");
+    getRedirectParam() ||
+    getDefaultRedirect(
+      result.customer.role,
+      context === "signup" ? "signup" : "login"
+    );
   setTimeout(() => {
     window.location.href = redirect;
   }, 600);
@@ -1002,8 +1034,16 @@ function initGoogleAuth() {
     return;
   }
   const slots = [
-    { container: byId("googleLogin"), status: byId("googleLoginStatus"), context: "login" },
-    { container: byId("googleSignup"), status: byId("googleSignupStatus"), context: "signup" },
+    {
+      container: byId("googleLogin"),
+      status: byId("googleLoginStatus"),
+      context: "login",
+    },
+    {
+      container: byId("googleSignup"),
+      status: byId("googleSignupStatus"),
+      context: "signup",
+    },
   ].filter((entry) => entry.container);
   if (!slots.length) return;
 
@@ -1046,7 +1086,8 @@ function initGoogleAuth() {
       }
       google.accounts.id.initialize({
         client_id: clientId,
-        callback: (response) => handleGoogleCredential(response, activeGoogleContext),
+        callback: (response) =>
+          handleGoogleCredential(response, activeGoogleContext),
         auto_select: Boolean(config.autoSelect),
         cancel_on_tap_outside: true,
       });
@@ -1071,7 +1112,8 @@ function initGoogleAuth() {
       renderGoogleStatus(slots, {
         buttonText: "Google sign-in unavailable",
         statusText:
-          error?.message || "Google sign-in could not be initialised. Check your network connection.",
+          error?.message ||
+          "Google sign-in could not be initialised. Check your network connection.",
       });
     });
 }
@@ -1099,7 +1141,9 @@ function renderDatabaseNotice() {
   const missing = ["host", "port", "name", "user"].filter((key) => !db[key]);
   if (missing.length) {
     notice.classList.add("callout--warning");
-    notice.textContent = `Database configuration incomplete: ${missing.join(", ")}. Update assets/js/env.local.js.`;
+    notice.textContent = `Database configuration incomplete: ${missing.join(
+      ", "
+    )}. Update assets/js/env.local.js.`;
   } else {
     notice.classList.add("callout--info");
     notice.textContent =
@@ -1116,7 +1160,8 @@ function renderDatabaseNotice() {
 export function requireAuth(redirectTo, allowedRoles = []) {
   const customer = getCurrentCustomer();
   if (!customer) {
-    const fallback = safeRedirect(redirectTo) || getDefaultRedirect(DEFAULT_ROLE, "signup");
+    const fallback =
+      safeRedirect(redirectTo) || getDefaultRedirect(DEFAULT_ROLE, "signup");
     const url = new URL("login.html", window.location.origin);
     url.searchParams.set("redirect", fallback);
     window.location.href = `${url.pathname}${url.search}`;

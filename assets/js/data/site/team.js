@@ -3,7 +3,7 @@ export const team = [
     id: "pasan-rathnayake",
     name: "Pasan Rathnayake",
     role: "Lead Developer",
-    location: "Colombo, Sri Lanka",
+    location: "Melbourne, Australia",
     bio:
       "Pasan leads product architecture at Zyvrix, applying years of full-stack experience across web, mobile, and API builds while pairing every sprint with security best practices.",
     testimonial:
@@ -16,8 +16,8 @@ export const team = [
       "DevOps automation and performance tuning",
     ],
     links: [
-      { label: "Portfolio", href: "Portfolio" },
-      { label: "Website", href: "https://zyvrix.com" },
+      { label: "Portfolio", href: "https://builtbypasan.com/" },
+      { label: "Website", href: "https://builtbypasan.com/" },
       {
         label: "LinkedIn",
         href: "https://www.linkedin.com/in/pasan-rathnayake-b4a488240/",
@@ -30,7 +30,7 @@ export const team = [
     id: "sunera-ranasooriya",
     name: "Sunera Ranasooriya",
     role: "Cybersecurity Specialist & Advisor",
-    location: "Colombo, Sri Lanka",
+    location: "Melbourne, Australia",
     bio:
       "Sunera co-founded Zyvrix to embed cybersecurity thinking inside every project, advising on threat modelling, penetration testing, and governance for growing teams.",
     testimonial:
