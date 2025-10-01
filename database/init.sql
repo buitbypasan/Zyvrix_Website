@@ -3,6 +3,52 @@
 
 START TRANSACTION;
 
+-- Helper to add a column only if it does not exist
+DELIMITER $$
+DROP PROCEDURE IF EXISTS add_column_if_not_exists $$
+CREATE PROCEDURE add_column_if_not_exists(
+  IN db_name VARCHAR(64),
+  IN tbl_name VARCHAR(64),
+  IN col_name VARCHAR(64),
+  IN col_def TEXT
+)
+BEGIN
+  IF (SELECT COUNT(*) FROM information_schema.COLUMNS
+      WHERE TABLE_SCHEMA = db_name AND TABLE_NAME = tbl_name AND COLUMN_NAME = col_name) = 0 THEN
+    SET @s = CONCAT('ALTER TABLE `', db_name, '`.`', tbl_name, '` ADD COLUMN `', col_name, '` ', col_def);
+    PREPARE st FROM @s;
+    EXECUTE st;
+    DEALLOCATE PREPARE st;
+  END IF;
+END $$
+DELIMITER ;
+
+-- Helper to add an index only if it does not exist
+DELIMITER $$
+DROP PROCEDURE IF EXISTS add_index_if_not_exists $$
+CREATE PROCEDURE add_index_if_not_exists(
+  IN db_name VARCHAR(64),
+  IN tbl_name VARCHAR(64),
+  IN idx_name VARCHAR(64),
+  IN idx_columns TEXT,       -- e.g. '(`slug`)' or '(`cart_id`)'
+  IN is_unique BOOLEAN
+)
+BEGIN
+  IF (SELECT COUNT(*) FROM information_schema.STATISTICS
+      WHERE TABLE_SCHEMA = db_name AND TABLE_NAME = tbl_name AND INDEX_NAME = idx_name) = 0 THEN
+    IF is_unique THEN
+      SET @s = CONCAT('ALTER TABLE `', db_name, '`.`', tbl_name, '` ADD UNIQUE INDEX `', idx_name, '` ', idx_columns);
+    ELSE
+      SET @s = CONCAT('ALTER TABLE `', db_name, '`.`', tbl_name, '` ADD INDEX `', idx_name, '` ', idx_columns);
+    END IF;
+    PREPARE st FROM @s;
+    EXECUTE st;
+    DEALLOCATE PREPARE st;
+  END IF;
+END $$
+DELIMITER ;
+
+-- Tables
 CREATE TABLE IF NOT EXISTS customers (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
@@ -14,9 +60,10 @@ CREATE TABLE IF NOT EXISTS customers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE customers
-    ADD COLUMN IF NOT EXISTS role VARCHAR(50) NOT NULL DEFAULT 'basic',
-    ADD COLUMN IF NOT EXISTS provider VARCHAR(60) DEFAULT NULL;
+-- If your existing DB might not have role/provider columns,
+-- these calls will add them only if missing.
+CALL add_column_if_not_exists(DATABASE(), 'customers', 'role', "VARCHAR(50) NOT NULL DEFAULT 'basic'");
+CALL add_column_if_not_exists(DATABASE(), 'customers', 'provider', "VARCHAR(60) DEFAULT NULL");
 
 CREATE TABLE IF NOT EXISTS products (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -69,12 +116,14 @@ CREATE TABLE IF NOT EXISTS order_items (
     CONSTRAINT fk_order_items_product FOREIGN KEY (product_id) REFERENCES products(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
-CREATE INDEX IF NOT EXISTS idx_carts_customer ON carts(customer_id);
-CREATE INDEX IF NOT EXISTS idx_cart_items_cart ON cart_items(cart_id);
-CREATE INDEX IF NOT EXISTS idx_orders_cart ON orders(cart_id);
-CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
+-- Add indexes if they do not exist
+CALL add_index_if_not_exists(DATABASE(), 'products', 'idx_products_slug', '(`slug`)', FALSE);
+CALL add_index_if_not_exists(DATABASE(), 'carts', 'idx_carts_customer', '(`customer_id`)', FALSE);
+CALL add_index_if_not_exists(DATABASE(), 'cart_items', 'idx_cart_items_cart', '(`cart_id`)', FALSE);
+CALL add_index_if_not_exists(DATABASE(), 'orders', 'idx_orders_cart', '(`cart_id`)', FALSE);
+CALL add_index_if_not_exists(DATABASE(), 'order_items', 'idx_order_items_order', '(`order_id`)', FALSE);
 
+-- Products seed (safe upsert)
 INSERT INTO products (slug, name, description, price, category)
 VALUES
     ('security-audit', 'Security & compliance audit', 'Deep-dive review mapped to OWASP and ISO controls.', 3600.00, 'Security'),
@@ -84,5 +133,9 @@ VALUES
     ('mobile-polish', 'Mobile polish sprint', 'Stabilise Flutter or React Native apps with performance tuning.', 3300.00, 'Mobile'),
     ('ux-accessibility', 'Accessibility & UX review', 'Audit flows against WCAG 2.2 AA with actionable remediation.', 1750.00, 'Experience')
 ON DUPLICATE KEY UPDATE slug = slug;
+
+-- Clean up helper procedures
+DROP PROCEDURE IF EXISTS add_column_if_not_exists;
+DROP PROCEDURE IF EXISTS add_index_if_not_exists;
 
 COMMIT;
