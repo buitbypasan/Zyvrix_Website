@@ -1,7 +1,7 @@
 export const socials = [
   {
     label: "Website",
-    href: "https://cyberion.com",
+    href: "https://zyvrix.com",
     aria: "Website",
     icon: "<svg viewBox='0 0 24 24' aria-hidden='true'><path fill='currentColor' d='M12 2a10 10 0 100 20 10 10 0 000-20zm0 2.1c1.5 0 2.9.5 4 1.3a16 16 0 01-4 6.6 16 16 0 01-4-6.6A7.9 7.9 0 0112 4.1zm-6.7 7.1a13.8 13.8 0 003.4 5.9A8 8 0 015.3 11.2zm5.3 6.9c1.1-1.3 2.1-2.7 2.8-4.2.7 1.5 1.7 2.9 2.8 4.2a7.9 7.9 0 01-5.6 0zm6.7-.9a13.8 13.8 0 003.4-5.9 8 8 0 01-3.4 5.9z'/></svg>",
   },
