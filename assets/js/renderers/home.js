@@ -40,17 +40,21 @@ export function renderHomePage(data) {
   }
 
   const servicesHeading = byId("servicesHeading");
-  if (servicesHeading) servicesHeading.textContent = page.services?.heading || "";
+  if (servicesHeading)
+    servicesHeading.textContent = page.services?.heading || "";
   const servicesCards = byId("servicesCards");
   if (servicesCards) {
     const servicesSection = servicesCards.closest(".services");
-    if (servicesSection) servicesSection.toggleAttribute("hidden", !ecommerceEnabled);
+    if (servicesSection)
+      servicesSection.toggleAttribute("hidden", !ecommerceEnabled);
     servicesCards.innerHTML = "";
     if (ecommerceEnabled) {
       (page.services?.cards || []).forEach((card) => {
         const article = document.createElement("article");
         article.className = "service-card js-reveal";
-        const icon = card.icon ? `<span class="service-card__icon">${card.icon}</span>` : "";
+        const icon = card.icon
+          ? `<span class="service-card__icon">${card.icon}</span>`
+          : "";
         const highlights = (card.highlights || [])
           .map((item) => `<li>${item}</li>`)
           .join("");
@@ -77,7 +81,8 @@ export function renderHomePage(data) {
   const addOnsCards = byId("addOnsCards");
   if (addOnsCards) {
     const addOnsSection = addOnsCards.closest(".add-ons");
-    if (addOnsSection) addOnsSection.toggleAttribute("hidden", !ecommerceEnabled);
+    if (addOnsSection)
+      addOnsSection.toggleAttribute("hidden", !ecommerceEnabled);
     addOnsCards.innerHTML = "";
     if (ecommerceEnabled) {
       (addOns.cards || []).forEach((card) => {
@@ -104,7 +109,8 @@ export function renderHomePage(data) {
   }
 
   const highlightsHeading = byId("highlightsHeading");
-  if (highlightsHeading) highlightsHeading.textContent = page.highlights?.heading || "";
+  if (highlightsHeading)
+    highlightsHeading.textContent = page.highlights?.heading || "";
   const highlightsGrid = byId("highlightsGrid");
   if (highlightsGrid) {
     highlightsGrid.innerHTML = "";
@@ -202,7 +208,9 @@ export function renderHomePage(data) {
     homeForm.dataset.formKey = ecommerceEnabled ? "contact" : "basicContact";
     const hiddenField = homeForm.querySelector("input[name='form']");
     if (hiddenField) {
-      hiddenField.value = ecommerceEnabled ? "Home contact" : "Home contact (basic site)";
+      hiddenField.value = ecommerceEnabled
+        ? "Home contact"
+        : "Home contact (basic site)";
     }
   }
 }

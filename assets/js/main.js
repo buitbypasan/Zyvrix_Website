@@ -12,8 +12,8 @@ import { initSiteMode } from "./core/siteMode.js";
 
 initThemeToggle();
 initCookieBanner();
-initPageLoader();
 initSiteMode();
+initPageLoader();
 
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.DATA) return;

@@ -8,7 +8,7 @@ export const team = [
       "Pasan leads product architecture at Zyvrix, applying years of full-stack experience across web, mobile, and API builds while pairing every sprint with security best practices.",
     testimonial:
       "“I enjoy turning complex ideas into maintainable products that are fast, accessible, and safe to scale.”",
-    portfolio: "https://zyvrix.com/",
+    portfolio: "https://builtbypasan.com/",
     focus: [
       "End-to-end SaaS and marketing platform builds",
       "React, Next.js, Flutter, and modern mobile stacks",

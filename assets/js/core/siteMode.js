@@ -23,24 +23,11 @@ function normalizeMode(value) {
   const mode = String(value || "").toLowerCase();
   if (mode === SITE_MODES.ECOMMERCE) return SITE_MODES.ECOMMERCE;
   if (mode === SITE_MODES.BASIC) return SITE_MODES.BASIC;
-  return SITE_MODES.ECOMMERCE;
+  return SITE_MODES.BASIC;
 }
 
 function readStoredMode() {
-  let stored;
-  try {
-    stored = localStorage.getItem(STORAGE_KEY);
-  } catch (error) {
-    stored = null;
-  }
-  if (!stored) {
-    const envDefault = window.ENV?.site?.defaultMode;
-    if (envDefault) {
-      stored = envDefault;
-    } else {
-      stored = SITE_MODES.ECOMMERCE;
-    }
-  }
+  const stored = window.ENV?.site?.defaultMode;
   return normalizeMode(stored);
 }
 
@@ -86,7 +73,9 @@ export function setSiteMode(mode) {
 }
 
 export function toggleSiteMode() {
-  return setSiteMode(isEcommerceEnabled() ? SITE_MODES.BASIC : SITE_MODES.ECOMMERCE);
+  return setSiteMode(
+    isEcommerceEnabled() ? SITE_MODES.BASIC : SITE_MODES.ECOMMERCE
+  );
 }
 
 function bindStorageListener() {
@@ -113,12 +102,17 @@ export function renderEcommerceDisabled(options = {}) {
     description = "An administrator has switched the site to the normal experience. Enable e-commerce mode to access this section.",
     icon = "🛒",
   } = options;
-  const main = document.getElementById("main") || document.querySelector("main");
+  const main =
+    document.getElementById("main") || document.querySelector("main");
   if (!main) return;
   const section = document.createElement("section");
   section.className = "container ecommerce-disabled";
   section.innerHTML = `
-    ${icon ? `<div class="ecommerce-disabled__icon" aria-hidden="true">${icon}</div>` : ""}
+    ${
+      icon
+        ? `<div class="ecommerce-disabled__icon" aria-hidden="true">${icon}</div>`
+        : ""
+    }
     <h1>${title}</h1>
     <p>${description}</p>
   `;
